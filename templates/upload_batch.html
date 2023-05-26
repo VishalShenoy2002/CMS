@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block body %}
+<div class="ui raised very padded text container segment">
+    <h1>Upload Batch</h1>
+    <label for="note">
+        <b>Note:</b>The file should end with (.csv) and the filename should be as follows:<br><br>
+        <b>Format: </b>dept_department_batch_year_of_admission.csv <br>
+        <b>Example: </b>dept_bca_batch_2020.csv
+    </label><br><br>
+    <form action="" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" id="file" class="ui input">
+        <button type="submit" class="ui violet button">Upload</button>
+    </form><br><br>
+    <a href="/admission">
+        <button class="ui black button">Go Back</button>
+    </a>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block body %}
+<div class="ui raised very padded text container segment">
+    <h1>Edit Batch</h1>
+    <a href="/add-student">
+        <button class="ui green button">Add Student</button>
+    </a>
+
+    <a href="/remove-student">
+        <button class="ui red button">Remove Student</button>
+    </a>
+
+    <a href="/admission">
+        <button class="ui black button">Go Back</button>
+    </a>
+
+</div>
+
+{% endblock %}

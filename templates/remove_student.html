@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block body %}
+<div class="ui raised very padded text container segment">
+    <h1>Remove Student</h1>
+    <label for="note">Please enter the student details below to remove the student.</label><br><br>
+    <form action="" method="post" enctype="multipart/form-data">
+        <div class="ui fluid input">
+            <input type="text" class="ui input" placeholder="Department" name="dept" id="dept"><br>
+        </div>
+        <div class="ui fluid input">
+            <input type="text" class="ui input" placeholder="Year of Admission" name="year_of_admission" id="year_of_admission"><br>
+        </div>
+
+        <div class="ui fluid input">
+            <input type="tel" class="ui input" placeholder="Student's Roll Number" name="student_rollno" id="student_rollno"><br>
+        </div>
+        <button type="submit" class="ui red button">Remove Student</button>
+    </form>
+
+</div>
+
+{% endblock %}

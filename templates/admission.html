@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block body %}
+<div class="ui raised very padded medium text container segment">
+    <h1>Admission</h1>
+    <div class="ui link cards">
+        <div class="card">
+            <div class="image">
+                <img src="../static/imgs/upload_batch.jpg">
+            </div>
+            <div class="content">
+                <div class="header"><a href="/upload-batch">Upload Batch</a></div>
+
+                <div class="description">
+                    Add a new Batch to the Student Management System
+
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image">
+                <img src="../static/imgs/edit_batch.jpg">
+            </div>
+            <div class="content">
+                <div class="header"><a href="/edit-batch">Edit Batch</a></div>
+
+                <div class="description">
+                    Edit an existing Batch in the Student Management System
+
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image">
+                <img src="../static/imgs/delete_batch.jpg">
+            </div>
+            <div class="content">
+                <div class="header"><a href="/delete-batch">Delete Batch</a></div>
+
+                <div class="description">
+                    Discard an existing Batch in the Student Management System
+
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image">
+                <img src="../static/imgs/search_batch.jpg">
+            </div>
+            <div class="content">
+                <div class="header"><a href="/search-batch">Search Batch</a></div>
+
+                <div class="description">
+                    Search for a Batch in the Student Management System
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    {% endblock %}
