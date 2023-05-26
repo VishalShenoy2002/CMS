@@ -9,7 +9,9 @@
         <b>Example: </b>dept_bca_batch_2020.csv
     </label><br><br>
     <form action="" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" id="file" class="ui input">
+        <div class="ui input">
+            <input type="file" name="file" id="file" accept="csv" class="ui input">
+        </div>
         <button type="submit" class="ui violet button">Upload</button>
     </form><br><br>
     <a href="/admission">
