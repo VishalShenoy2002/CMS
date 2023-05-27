@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block body %}
+<div class="ui raised very padded text container segment">
+    <h1>Delete Batch</h1>
+    <label for="note">Please enter the details of the batch you want to remove.</label><br><br>
+    <form action="" method="post" enctype="multipart/form-data">
+        <div class="ui fluid input">
+            <input type="text" class="ui input" placeholder="Department" name="dept" id="dept"><br>
+        </div>
+        <div class="ui fluid input">
+            <input type="text" class="ui input" placeholder="Year of Admission" name="year_of_admission" id="year_of_admission"><br>
+        </div><br>
+
+        <button type="submit" class="ui red button">Delete Batch</button>
+    </form><br>
+    <a href="/admission">
+        <button class="ui black button">Go Back</button>
+    </a>
+
+</div>
+
+{% endblock %}
