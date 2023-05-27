@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block body %}
+<div class="ui raised very padded text container segment">
+    <h1>Search</h1>
+    <label for="note">Please enter the details of the batch or the student you want to search for.</label><br><br>
+    <label for="search batch"><b>Search Batch:</b></label>
+    <form action="" method="post" enctype="multipart/form-data">
+        <div class="ui input">
+            <input type="text" name="dept" id="dept" class="ui input" placeholder="Department">
+        </div>
+        
+        <div class="ui input">
+            <input type="number" name="year_of_admission" id="year_of_admission" class="ui input" placeholder="Year of Admission">
+        </div><br><br>
+        <button type="submit" class="ui violet button">Search</button>
+    </form>
+    <div class="ui horizontal divider">
+        Or
+    </div>
+    <label for="search student"><b>Search Student:</b></label>
+    <form action="" method="post" enctype="multipart/form-data">
+        <div class="ui fluid input">
+            <input type="text" name="dept" id="dept" class="ui input" placeholder="Department">
+        </div>
+        <div class="ui fluid input">
+            <input type="text" name="year_of_admission" id="year_of_admission" class="ui input" placeholder="Year of Admission">
+        </div>
+
+        <div class="ui fluid input">
+            <input type="text" class="ui input" placeholder="Student's Roll Number" name="student_rollno" id="student_rollno"><br>
+        </div><br>        
+        <button type="submit" class="ui violet button">Search</button>
+    </form><br><br>
+    <a href="/admission">
+        <button class="ui black button">Go Back</button>
+    </a>
+</div>
+{% endblock %}
