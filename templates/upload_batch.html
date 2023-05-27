@@ -10,8 +10,18 @@
     </label><br><br>
     <form action="" method="post" enctype="multipart/form-data">
         <div class="ui input">
-            <input type="file" name="file" id="file" accept="csv" class="ui input">
+            <input type="file" name="file" id="file" class="ui input">
         </div>
+        <button type="submit" class="ui violet button">Upload</button>
+    </form><br><br>
+    <div class="ui horizontal divider">
+        Or
+    </div>
+    <form action="" method="post" enctype="multipart/form-data">
+        <div class="c-file-upload c-file-upload--drop">
+            Drop to upload your files
+            <input type="file" name="file" id="file">
+        </div><br>
         <button type="submit" class="ui violet button">Upload</button>
     </form><br><br>
     <a href="/admission">
