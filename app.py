@@ -13,6 +13,10 @@ app.config['UPLOAD_FOLDER']=os.path.join(os.getcwd(),"uploads")
 
 ALLOWED_EXTENSIONS = {'csv'}
 
+# Admission Page Routes
+@app.route("/admission")
+def admission():
+    return render_template("admission.html",title="Admission")
 
 @app.route("/upload-batch",methods=["GET","POST"])
 def upload_batch():
@@ -35,17 +39,27 @@ def upload_batch():
 def edit_batch():
     return render_template("edit_batch.html",title="Edit Batch")
 
-@app.route("/add-student")
+@app.route("/delete-batch")
+def delete_batch():
+    return render_template("delete_batch.html",title="Delete Batch")
+
+@app.route("/search")
+def search_batch():
+    return render_template("search.html",title="Search")
+
+@app.route("/edit-batch/add-student")
 def add_student():
     return render_template("add_student.html",title="Edit Batch | Add Student")
 
-@app.route("/remove-student")
+@app.route("/edit-batch/remove-student")
 def remove_student():
     return render_template("remove_student.html",title="Edit Batch | Remove Student")
 
-@app.route("/admission")
-def admission():
-    return render_template("admission.html",title="Admission")
+
+# Internal Assesment Page Routes
+@app.route("/internal-assesment")
+def internal_assesment():
+    return render_template("internal_assesment.html",title="Internal Assesment")
 
 if __name__ == "__main__":
     app.run(debug=True)
