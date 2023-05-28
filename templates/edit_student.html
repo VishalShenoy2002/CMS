@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block body %}
+<div class="ui raised very padded text container segment">
+    <h1>Edit Student</h1>
+    <label for="note">Please enter the student details below to edit the student details.</label><br><br>
+    <form action="" method="post" enctype="multipart/form-data">
+        <div class="ui fluid input">
+            <input type="text" class="ui input" placeholder="Student's Roll Number" name="student_rollno" id="student_rollno"><br>
+        </div>
+        <div class="ui fluid input">
+            <input type="text" class="ui input" placeholder="Student's Name" name="student_name" id="student_name"><br>
+        </div>
+
+        <div class="ui fluid input">
+            <input type="tel" class="ui input" placeholder="Student's Contact Number" name="student_contact" id="student_contact"><br>
+        </div><br>
+        <button type="submit" class="ui blue button">Edit Student</button>
+    </form><br>
+    <a href="/edit-batch">
+        <button class="ui black button">Go Back</button>
+    </a>
+
+</div>
+{% endblock %}
