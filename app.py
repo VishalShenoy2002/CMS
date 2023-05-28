@@ -13,6 +13,10 @@ app.config['UPLOAD_FOLDER']=os.path.join(os.getcwd(),"uploads")
 
 ALLOWED_EXTENSIONS = {'csv'}
 
+@app.route("/")
+def index():
+    return render_template("index.html",title="Home")
+
 # Admission Page Routes
 @app.route("/admission")
 def admission():
@@ -54,6 +58,10 @@ def add_student():
 @app.route("/edit-batch/remove-student")
 def remove_student():
     return render_template("remove_student.html",title="Edit Batch | Remove Student")
+
+@app.route("/edit-batch/edit-student")
+def edit_student():
+    return render_template("edit_student.html",title="Edit Batch | Edit Student")
 
 
 # Internal Assesment Page Routes
