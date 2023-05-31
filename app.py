@@ -6,7 +6,15 @@ from werkzeug.utils import secure_filename
 import os
 import csv
 import util_functions
+import openai
+import json
 
+with open("config.json","r") as f:
+    data=json.load(f)
+    f.close()
+
+openai.api_key=data['tokens']['openai']
+test_generator=openai.Completion()
 
 app=Flask(__name__)
 app.config['UPLOAD_FOLDER']=os.path.join(os.getcwd(),"uploads")
@@ -22,7 +30,7 @@ def index():
 def admission():
     return render_template("admission.html",title="Admission")
 
-@app.route("/upload-batch",methods=["GET","POST"])
+@app.route("/admission/upload-batch",methods=["GET","POST"])
 def upload_batch():
     if request.method == "POST":
         if 'file' not in request.form:
@@ -39,11 +47,11 @@ def upload_batch():
 
     return render_template("upload_batch.html",title="Upload Batch")
 
-@app.route("/edit-batch")
+@app.route("/admission/edit-batch")
 def edit_batch():
     return render_template("edit_batch.html",title="Edit Batch")
 
-@app.route("/delete-batch")
+@app.route("/admission/delete-batch")
 def delete_batch():
     return render_template("delete_batch.html",title="Delete Batch")
 
@@ -68,6 +76,48 @@ def edit_student():
 @app.route("/internal-assesment")
 def internal_assesment():
     return render_template("internal_assesment.html",title="Internal Assesment")
+
+@app.route("/internal-assesment/upload-marks")
+def upload_marks():
+    if request.method == "POST":
+        if 'file' not in request.form:
+            print("No File Uploaded")
+
+        file=request.files['file']
+        print(file,type(file))
+        if util_functions.allowed_file(file.filename,ALLOWED_EXTENSIONS) == True:
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'],secure_filename(file.filename)))
+            return "File Saved"
+        else:
+            return "File Not Saved (expected CSV)"
+    
+    return render_template("upload_marks.html",title="Internal Assesment | Upload Marks")
+
+@app.route("/internal-assesment/generate-test",methods=["GET","POST"])
+def generate_test():
+    if request.method == "POST":
+        subject=request.form.get('subject')
+        marks=request.form.get('marks')
+        dept=request.form.get('department')
+        prompt=f"[You are a teacher of {dept} department.]Generate a test on {subject} for {marks} marks.  The format of the questions should be 'question number-question-marks'.<stop>"
+        response=test_generator.create(model="text-davinci-003",prompt=prompt,max_tokens=2500,stop="<stop>")
+        response=response['choices'][0]['text'].strip()
+        question=[tuple(question.split("-")) for question in response.split("\n")]
+        
+        return render_template("generate_test.html",title="Internal Assesment | Generate Test",questions=question)
+    return render_template("generate_test.html",title="Internal Assesment | Generate Test")
+    
+@app.route("/account")
+def account():
+    return render_template("account_page.html",title="Account",details_dict={"Name":"Vishal","Age":20})
+
+@app.route("/teachers-dashboard")
+def teachers_dashboard():
+    return render_template("teachers_dashboard.html",title="Teacher's Dashboard")
+
+@app.route("/attendance")
+def attendance():
+    return render_template("attendance_page.html",title="Attendance")
 
 if __name__ == "__main__":
     app.run(debug=True)
