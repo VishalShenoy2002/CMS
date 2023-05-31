@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block body %}
+<div class="ui raised very padded text container segment">
+    <h1>Generate Test</h1>
+    <label for="note">Please enter the Subject Name an the number of Marks.</label><br><br>
+    <form action="" method="post" enctype="multipart/form-data">
+        <div class="ui fluid input">
+            <input type="text" class="ui input" placeholder="Department" name="department" id="department"><br>
+        </div>
+        <div class="ui fluid input">
+            <input type="text" class="ui input" placeholder="Subject" name="subject" id="subject"><br>
+        </div>
+        <div class="ui fluid input">
+            <input type="text" class="ui input" placeholder="Marks" name="marks" id="marks"><br>
+        </div><br>
+
+        <button type="submit" class="ui green button">Generate Test</button>
+    </form><br>
+    <a href="/internal-assesment">
+        <button class="ui black button">Go Back</button>
+    </a>
+
+    <table class="ui celled table">
+        <thead>
+          <tr><th>Qno</th>
+          <th>Question</th>
+          <th>Marks</th>
+        </tr></thead>
+        <tbody>
+            {% for qno,question,marks in questions%}
+                <tr>
+                    <td data-label="Qno">{{ qno.strip() }}</td>
+                    <td data-label="Question">{{ question.strip() }}</td>
+                    <td data-label="Marks">{{ marks.strip() }}</td>
+                </tr>
+            {% endfor %}
+
+          
+        </tbody>
+      </table>
+
+</div>
+
+{% endblock %}
