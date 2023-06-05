@@ -113,11 +113,16 @@ def account():
 
 @app.route("/teachers-dashboard")
 def teachers_dashboard():
-    return render_template("teachers_dashboard.html",title="Teacher's Dashboard")
+    return render_template("teachers_dashboard.html",title="Teacher's Dashboard",timetable={1:"SE",2:"DAA",3:"GE"},topics={"27-09-2023":"Stack DS, Queue DS","26-09-2023":"Linked List DS"},date="28-09-2023")
 
-@app.route("/attendance")
+@app.route("/attendance",methods=["GET","POST"])
 def attendance():
     return render_template("attendance_page.html",title="Attendance")
+
+@app.route("/reports")
+def reports():
+    return render_template("reports.html",title="Reports")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
