@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block body %}
+<div class="ui raised very padded medium text container segment">
+    <h1>Teachers Dashboard</h1>
+    <h3>Today's Time Table</h3>
+    <table class="ui celled table">
+      <thead>
+      <tr><th>Hour</th>
+      <th>Subject - Sem</th>
+      </tr></thead>
+      <tbody>
+        {% for hour,subject in timetable.items() %}
+          <tr>
+            
+              <td data-label="Hour">Hour {{ hour }}</td>
+              <td data-label="Subject - Sem">{{ subject }}</td>
+          </tr>
+        {% endfor%}
+      
+      </tbody>
+  </table>
+
+  <div class="ui form">
+    <div class="field">
+      <label>Topics Taken on {{ date }} (Today)</label>
+      <textarea placeholder="Please Enter the topics that are taken today" rows="2"></textarea>
+    </div>
+    <button class="ui primary button" type="submit">Save</button>
+  </div>
+    <h3>Topics Taken Till Today</h3>
+    <table class="ui inverted blue celled table">
+      <thead>
+      <tr><th>Date</th>
+      <th>Topics</th>
+      </tr></thead>
+      <tbody>
+        {% for date,topic in topics.items() %}
+          <tr>
+            
+              <td data-label="Date">{{ date }}</td>
+              <td data-label="Topics">{{ topic }}</td>
+          </tr>
+        {% endfor%}
+      
+      </tbody>
+  </table>
+</div>
+{% endblock %}
