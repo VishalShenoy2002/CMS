@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block body %}
+<div class="ui raised very padded medium text container segment">
+    <h1>Students of {{ class }}</h1>
+        <table class="ui celled table">
+            <thead>
+            <tr><th>Student</th>
+            <th>Attendance</th>
+            </tr></thead>
+            <tbody>
+
+                <tr>
+                    <td data-label="Student">Student Name</td>
+                    <td data-label="Attendance">
+                        <div class="ui radio checkbox">
+                            <input type="radio" name="attendance-001">
+                            <label>Present</label>
+                        </div>
+                        <div class="ui radio checkbox">
+                            <input type="radio" name="attendance-001">
+                            <label>Absent</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td data-label="Student">Student Name</td>
+                    <td data-label="Attendance">
+                        <div class="ui radio checkbox">
+                            <input type="radio" name="attendance-002">
+                            <label>Present</label>
+                        </div>
+                        <div class="ui radio checkbox">
+                            <input type="radio" name="attendance-002">
+                            <label>Absent</label>
+                        </div>
+                    </td>
+                </tr>
+    
+            
+            </tbody>
+        </table>
+
+</div>
+{% endblock %}
