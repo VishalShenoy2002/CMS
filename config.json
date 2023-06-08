@@ -2,5 +2,12 @@
     "tokens":
     {
         "openai":"YOUR API KEY HERE"
+    },
+    "db":
+    {
+        "user":"root",
+        "password":"asdasd123",
+        "host":"localhost",
+        "database":"CMS"
     }
 }
