@@ -8,6 +8,25 @@
         <b>Format: </b>dept_department_batch_year_of_admission.csv <br>
         <b>Example: </b>dept_bca_batch_2020.csv
     </label><br><br>
+    <label for="note">
+        <b>Note:</b>The format of the CSV file should be as follows. The column names and order should exactly
+        be the same.<br><br>
+        <ul class="ui list">
+            <li class="">uucms_no</li>
+            <li class="">name</li>
+            <li class="">course</li>
+            <li class="">semester</li>
+            <li class="">batch</li>
+            <li class="">fathers_name</li>
+            <li class="">mothers_name</li>
+            <li class="">stream</li>
+            <li class="">sex</li>
+            <li class="">fathers_contact</li>
+            <li class="">mothers_contact</li>
+            <li class="">students_contact</li>
+            <li class="">whatsapp_no</li>
+        </ul>
+    </label><br><br>
     <form action="" method="post" enctype="multipart/form-data">
         <div class="ui input">
             <input type="file" name="file" id="file" class="ui input">
@@ -29,5 +48,10 @@
     </a>
 
 </div>
+{% if filename == '' %}
+<div role="alert" class="c-alert c-alert--{{ message.message_type }}">
+    {{ message.text }}
+</div>
+{% endif %}
 
 {% endblock %}
