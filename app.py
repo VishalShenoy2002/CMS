@@ -5,10 +5,11 @@ from werkzeug.utils import secure_filename
 
 import os
 import csv
-import util_functions
 import openai
 import json
 
+import util_functions
+import uploader
 with open("config.json","r") as f:
     data=json.load(f)
     f.close()
@@ -35,15 +36,22 @@ def upload_batch():
     if request.method == "POST":
         if 'file' not in request.form:
             print("No File Uploaded")
+            
 
         file=request.files['file']
-        print(file,type(file))
+
         if util_functions.allowed_file(file.filename,ALLOWED_EXTENSIONS) == True:
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'],secure_filename(file.filename)))
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'],"csv",secure_filename(file.filename)))
+            
+            uploader.read_and_insert_batch(os.path.join(app.config['UPLOAD_FOLDER'],"csv",secure_filename(file.filename)))
             return render_template("upload_batch.html",title="Upload Batch", filename=file.filename,message={"text":"File Saved Successfully","message_type":"success"})
             return "File Saved"
-        else:
+
+        elif util_functions.allowed_file(file.filename,ALLOWED_EXTENSIONS) == False:
             return render_template("upload_batch.html",title="Upload Batch", filename=file.filename,message={"text":"File Not Saved ","message_type":"error"})
+        
+        else:
+            return render_template("upload_batch.html",title="Upload Batch", filename=file.filename,message={"text":"No File Selcleted","message_type":"success"})
     
 
     return render_template("upload_batch.html",title="Upload Batch",message={"text":"","message_type":""})
