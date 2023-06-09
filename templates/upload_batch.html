@@ -48,7 +48,12 @@
     </a>
 
 </div>
+
 {% if filename == '' %}
+<div role="alert" class="c-alert c-alert--{{ message.message_type }}">
+    {{ message.text }}
+</div>
+{% else %}
 <div role="alert" class="c-alert c-alert--{{ message.message_type }}">
     {{ message.text }}
 </div>
