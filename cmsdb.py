@@ -36,7 +36,8 @@ CREATE TABLE IF NOT EXISTS faculty (
   faculty_id   VARCHAR(25)  NOT NULL PRIMARY KEY,
   faculty_name VARCHAR(250) NOT NULL,
   email        VARCHAR(100) NOT NULL,
-  contact      VARCHAR(15)  NOT NULL
+  contact      VARCHAR(15)  NOT NULL,
+  password     VARCHAR(64)  NOT NULL DEFAULT "4bddb0a3e00962416386fea5bca2cfd9759c9ba2ead9deeb65c1727277987698"
 );
 """
 cursor.execute(query)
