@@ -1,0 +1,16 @@
+{% extends "plain_page.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block body %}
+<div class="ui inverted raised very padded medium text container segment">
+    <h1>Login</h1>
+    <form action="" method="post" enctype="multipart/form-data">
+        <div class="ui fluid input">
+            <input type="text" name="username" id="username" class="ui input" placeholder="Username">
+        </div><br>
+        <div class="ui fluid input">
+            <input type="password" name="password" id="password" class="ui input" placeholder="Password">
+        </div><br>
+        <button type="submit" class="ui violet button">Login</button>
+    </form>
+</div>
+{% endblock %}
