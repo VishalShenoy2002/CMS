@@ -6,10 +6,11 @@ from werkzeug.utils import secure_filename
 import os
 import csv
 import openai
+import hashlib
 import json
 
 import util_functions
-import uploader
+import db_functions
 with open("config.json","r") as f:
     data=json.load(f)
     f.close()
@@ -43,7 +44,7 @@ def upload_batch():
         if util_functions.allowed_file(file.filename,ALLOWED_EXTENSIONS) == True:
             file.save(os.path.join(app.config['UPLOAD_FOLDER'],"csv",secure_filename(file.filename)))
             
-            uploader.read_and_insert_batch(os.path.join(app.config['UPLOAD_FOLDER'],"csv",secure_filename(file.filename)))
+            db_functions.read_and_insert_batch(os.path.join(app.config['UPLOAD_FOLDER'],"csv",secure_filename(file.filename)))
             return render_template("upload_batch.html",title="Upload Batch", filename=file.filename,message={"text":"File Saved Successfully","message_type":"success"})
             return "File Saved"
 
@@ -124,9 +125,11 @@ def account():
 def teachers_dashboard():
     return render_template("teachers_dashboard.html",title="Teacher's Dashboard",timetable={1:"SE",2:"DAA",3:"GE"},topics={"27-09-2023":"Stack DS, Queue DS","26-09-2023":"Linked List DS"},date="28-09-2023")
 
-@app.route("/teachers-dashboard/subject-allotment")
+@app.route("/teachers-dashboard/subject-allotment",methods=["GET","POST"])
 def subject_allotment():
-    return render_template("subject_allotment_page.html",title="Subject Allotment",user_type='admin',semesters=[1,2,3,4,5,6,7,8])
+    if request.method == "POST":
+        print(request.form)
+    return render_template("subject_allotment_page.html",title="Subject Allotment",user_type='hod',semesters=[1,2,3,4,5,6,7,8])
 
 @app.route("/attendance",methods=["GET","POST"])
 def attendance():
@@ -135,6 +138,18 @@ def attendance():
 @app.route("/reports")
 def reports():
     return render_template("reports.html",title="Reports")
+
+@app.route("/login",methods=["GET","POST"])
+def login_page():
+    if request.method == "POST":
+        username=request.form.get("username")
+        password=request.form.get("password")
+        password=hashlib.sha256(password.encode()).hexdigest()
+        if db_functions.check_cred(username,password) == True:
+            return redirect("/")
+        print(f"Username: {username} Password: {password}")
+    return render_template("login.html")
+
 
 
 if __name__ == "__main__":
