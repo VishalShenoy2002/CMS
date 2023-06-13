@@ -30,6 +30,13 @@ def read_and_insert_batch(csvfile:str):
 
         connection.commit()
 
+def check_cred(username,password):
+    query=util_functions.check_cred_query(username)
+    cursor.execute(query)
+    dbpassword=cursor.fetchone()
+    
+    return password == dbpassword
+        
 
 
 
