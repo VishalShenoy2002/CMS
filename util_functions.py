@@ -12,3 +12,8 @@ def insert_into_uploaded_files(data:tuple):
     query=f'INSERT INTO uploaded_files(filename,size)VALUES("{file}",{size});'
     del file,size
     return query
+
+def check_cred_query(username):
+    query=f'SELECT password from faculty WHERE username="{username}"'
+    return query
+
