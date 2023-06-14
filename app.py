@@ -148,9 +148,12 @@ def login_page():
         if db_functions.check_cred(username,password) == True:
             return redirect("/")
         print(f"Username: {username} Password: {password}")
-    return render_template("login.html")
+    return render_template("login_page.html",title="Login")
 
+@app.route("/student-registration-form")
+def student_registration():
+    return render_template("student_registration_page.html",title="Student Registration")
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host=data['http']['host'],port=5000,debug=True)
