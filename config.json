@@ -9,5 +9,10 @@
         "password":"asdasd123",
         "host":"localhost",
         "database":"CMS"
+    },
+    "http":
+    {
+        "host":"localhost",
+        "port": 5000
     }
 }
