@@ -25,7 +25,9 @@ CREATE TABLE IF NOT EXISTS students (uucms_no VARCHAR(50) NOT NULL PRIMARY KEY,n
   fathers_contact VARCHAR(15)  NOT NULL,
   mothers_contact VARCHAR(15)  NOT NULL,
   students_contact VARCHAR(15)  NOT NULL,
-  whatsapp_no VARCHAR(15)  NOT NULL);
+  whatsapp_no VARCHAR(15)  NOT NULL,
+  photo   BLOB  NOT NULL
+  );
   """
 
 cursor.execute(query)
@@ -37,7 +39,8 @@ CREATE TABLE IF NOT EXISTS faculty (
   faculty_name VARCHAR(250) NOT NULL,
   email        VARCHAR(100) NOT NULL,
   contact      VARCHAR(15)  NOT NULL,
-  password     VARCHAR(64)  NOT NULL DEFAULT "4bddb0a3e00962416386fea5bca2cfd9759c9ba2ead9deeb65c1727277987698"
+  password     VARCHAR(64)  NOT NULL DEFAULT "4bddb0a3e00962416386fea5bca2cfd9759c9ba2ead9deeb65c1727277987698",
+  photo        BLOB         NOT NULL
 );
 """
 cursor.execute(query)
