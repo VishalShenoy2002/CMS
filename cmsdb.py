@@ -56,6 +56,24 @@ CREATE TABLE IF NOT EXISTS uploaded_files (
 """
 cursor.execute(query)
 
+query="""
+CREATE TABLE courses (
+    course_name VARCHAR(100) PRIMARY KEY  NOT NULL,
+    full_form VARCHAR(250) NOT NULL,
+    num_of_sems INT NOT NULL
+);
+"""
+cursor.execute(query)
+
+query="""
+CREATE TABLE batches (
+    start_year INT,
+    end_year INT,
+    course_name VARCHAR(100),
+    FOREIGN KEY (course_name) REFERENCES courses(course_name)
+);
+"""
+cursor.execute(query)
 
 connection.commit()
 connection.close()
