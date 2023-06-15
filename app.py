@@ -27,6 +27,13 @@ ALLOWED_EXTENSIONS = {'csv'}
 def index():
     return render_template("index.html",title="Home")
 
+@app.route("/success")
+def success_page():
+    return render_template("success.html")
+
+@app.route("/failed")
+def fail_page():
+    return render_template("failed.html")
 # Admission Page Routes
 @app.route("/admission")
 def admission():
@@ -150,10 +157,23 @@ def login_page():
         print(f"Username: {username} Password: {password}")
     return render_template("login_page.html",title="Login")
 
-@app.route("/student-registration-form")
+@app.route("/student-registration-form",methods=["GET","POST"])
 def student_registration():
+    if request.method == "POST":
+        form_data=request.form
+        fieldnames=["uucms_no","name","course","semester","batch","fathers_name","mothers_name","stream","sex","fathers_contact","mothers_contact","students_contact","whatsapp_no","photo"]
+        record=dict(form_data)
+        if '' in record.values():
+            return redirect("/failed")
+        else:
+            with open(f"dept_{record['course'].lower()}_batch_{record['batch']}.csv","a+") as f:
+                writer=csv.DictWriter(f,fieldnames=fieldnames)
+                writer.writerow(record)
+                f.close()
+            return redirect("/success")
+    
     return render_template("student_registration_page.html",title="Student Registration")
 
 
 if __name__ == "__main__":
-    app.run(host=data['http']['host'],port=5000,debug=True)
+    app.run(host=data['http']['host'],debug=True)
