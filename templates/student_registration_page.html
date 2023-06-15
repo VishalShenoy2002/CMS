@@ -9,7 +9,7 @@
     <form action="" method="post" enctype="multipart/form-data">
         <label for="student details" class="ui large header">Student Details</label><br><br>
         <div class="ui fluid input">
-            <input type="text" name="roll_no" id="roll_no" class="ui input" placeholder="Roll Number">
+            <input type="text" name="uucms_no" id="uucms_no" class="ui input" placeholder="Roll Number">
         </div><br>
         <div class="ui fluid input">
             <input type="text" name="name" id="name" class="ui input" placeholder="Student Name">
@@ -18,7 +18,7 @@
             <input type="text" name="course" id="course" class="ui input" placeholder="Course">
         </div><br>
         <div class="ui fluid input">
-            <input type="number" name="sem" id="sem" class="ui input" placeholder="Semester">
+            <input type="number" name="semester" id="semester" class="ui input" placeholder="Semester">
         </div><br>
         <div class="ui fluid input">
             <input type="text" name="batch" id="batch" class="ui input" placeholder="Batch">
@@ -27,37 +27,37 @@
             <label>Stream</label>
             <div class="field">
                 <div class="ui radio checkbox">
-                    <input type="radio" name="stream">
+                    <input type="radio" name="stream" value="sci">
                     <label>Science</label>
                 </div>
             </div>
             <div class="field">
                 <div class="ui radio checkbox">
-                    <input type="radio" name="stream">
+                    <input type="radio" name="stream" value="com">
                     <label>Commerce</label>
                 </div>
             </div>
             <div class="field">
                 <div class="ui radio checkbox">
-                    <input type="radio" name="stream">
+                    <input type="radio" name="stream" value="art">
                     <label>Arts</label>
                 </div>
             </div>
         </div><br>
-        <div class="inline fields">
-            <label>Gender</label>
-            <div class="field">
-                <div class="ui radio checkbox">
-                    <input type="radio" name="sex">
-                    <label>Male</label>
+            <div class="inline fields">
+                <label>Gender</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="sex" value="m">
+                        <label>Male</label>
+                    </div>
                 </div>
-            </div>
-            <div class="field">
-                <div class="ui radio checkbox">
-                    <input type="radio" name="sex">
-                    <label>Female</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="sex" value="f">
+                        <label>Female</label>
+                    </div>
                 </div>
-            </div>
         </div><br>
 
         <label for="parent details" class="ui header">Parent Details</label><br><br>
