@@ -1,0 +1,24 @@
+{% extends "plain_page.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block body %}
+<img src="../static/imgs/logo.gif" class="ui small centered image">
+<h1 class="ui centered header">Student Registration Form</h1>
+
+<div class="ui raised very padded medium text  inverted orange container segment">
+
+    <form action="" method="post" enctype="multipart/form-data">
+        <label for="student details" class="ui large header">Enter Details</label><br><br>
+        <div class="ui fluid input">
+            <input type="text" name="department" id="department" class="ui input" placeholder="Department">
+        </div><br>
+        <div class="ui fluid input">
+            <input type="number" name="batch" id="batch" class="ui input" placeholder="Batch">
+        </div><br>
+        <div class="ui fluid input">
+            <input type="text" name="uucms_no" id="uucms_no" class="ui input" placeholder="Roll Number">
+        </div><br>
+
+        <button type="submit" class="ui black centered button">Next</button>
+    </form>
+</div>
+{% endblock %}
