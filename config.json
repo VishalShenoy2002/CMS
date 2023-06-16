@@ -6,7 +6,7 @@
     "db":
     {
         "user":"root",
-        "password":"asdasd123",
+        "password":"",
         "host":"localhost",
         "database":"CMS"
     },
