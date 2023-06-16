@@ -39,7 +39,7 @@ if connection.is_connected():
     mothers_contact VARCHAR(15)  NOT NULL,
     students_contact VARCHAR(15)  NOT NULL,
     whatsapp_no VARCHAR(15)  NOT NULL,
-    photo   BLOB  NOT NULL
+    photo   BLOB  NOT NULL  DEFAULT "No Photo"
     );
     """
   # execute() will execute the query that is given as paramenter
@@ -53,7 +53,7 @@ if connection.is_connected():
     email        VARCHAR(100) NOT NULL,
     contact      VARCHAR(15)  NOT NULL,
     password     VARCHAR(64)  NOT NULL DEFAULT "4bddb0a3e00962416386fea5bca2cfd9759c9ba2ead9deeb65c1727277987698",
-    photo        BLOB         NOT NULL
+    photo        BLOB         NOT NULL DEFAULT "No Photo"
   );
   """
   # execute() will execute the query that is given as paramenter
