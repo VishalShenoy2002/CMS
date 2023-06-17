@@ -10,7 +10,7 @@ def allowed_file(filename:str,extensions:set) -> bool:
 # insert_into_student() is used to generate an insert query for the students table
 def insert_into_student(data:tuple) -> str:
     uucms_no,name,course,semester,batch,fathers_name,mothers_name,stream,sex,fathers_contact,mothers_contact,students_contact,whatsapp_no=data
-    query= f'INSERT INTO students(uucms_no,name,course,semester,batch,fathers_name,mothers_name,stream,sex,fathers_contact,mothers_contact,students_contact,whatsapp_no)VALUES("{uucms_no}","{name}","{course}","{semester}","{batch}","{fathers_name}","{mothers_name}","{stream}","{sex}","{fathers_contact}","{mothers_contact}","{students_contact}","{whatsapp_no}");'
+    query= f'INSERT INTO students(uucms_no,name,course,semester,batch,fathers_name,mothers_name,stream,sex,fathers_contact,mothers_contact,students_contact,whatsapp_no,photo)VALUES("{uucms_no}","{name}","{course}","{semester}","{batch}","{fathers_name}","{mothers_name}","{stream}","{sex}","{fathers_contact}","{mothers_contact}","{students_contact}","{whatsapp_no}","123");'
     del uucms_no,name,course,semester,batch,fathers_name,mothers_name,stream,sex,fathers_contact,mothers_contact,students_contact,whatsapp_no
     return query
 
