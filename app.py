@@ -1,8 +1,8 @@
 from flask import Flask
-from flask import render_template,flash,redirect
+from flask import render_template,redirect,url_for
 from flask import request
 from werkzeug.utils import secure_filename
-
+from student import Student
 import os
 import csv
 import openai
@@ -11,6 +11,8 @@ import json
 
 import util_functions
 import db_functions
+
+
 with open("config.json","r") as f:
     data=json.load(f)
     f.close()
@@ -50,7 +52,6 @@ def upload_batch():
 
         if util_functions.allowed_file(file.filename,ALLOWED_EXTENSIONS) == True:
             file.save(os.path.join(app.config['UPLOAD_FOLDER'],"csv",secure_filename(file.filename)))
-            
             db_functions.read_and_insert_batch(os.path.join(app.config['UPLOAD_FOLDER'],"csv",secure_filename(file.filename)))
             return render_template("upload_batch.html",title="Upload Batch", filename=file.filename,message={"text":"File Saved Successfully","message_type":"success"})
             return "File Saved"
@@ -157,23 +158,65 @@ def login_page():
         print(f"Username: {username} Password: {password}")
     return render_template("login_page.html",title="Login")
 
-@app.route("/student-registration-form",methods=["GET","POST"])
-def student_registration():
+@app.route("/student-registration/1",methods=["GET","POST"])
+def student_registration_page_1():
+    student=Student()
     if request.method == "POST":
         form_data=request.form
+        
+        student.uucms_no=form_data.get('uucms_no')
+        student.batch=form_data.get('batch')
+        student.department=form_data.get('department')
+
+        if student.exists():
+            name=student.get_student_name()
+            return render_template("student_registration_page_1.html",title="Student Registration",records=student.get_record())
+
+    
+    return render_template("student_registration_page_1.html",title="Student Registration",records=student.get_record())
+
+@app.route("/student-registration/2/<uucms_no>",methods=["GET","POST"])
+def student_registration_page_2(uucms_no):
+    student=Student()
+    student.uucms_no=uucms_no
+    record=student.get_full_record()[0]
+    fieldnames=["uucms_no","name","course","batch"]
+    if request.method == "GET":
+        record=dict(zip(fieldnames,record))
+        print(record)
+        return render_template("student_registration_page_2.html",title="Student Registration",uucms_no=record['uucms_no'],name=record['name'],department=record["course"],batch=record['batch'])
+
+    if request.method == "POST":
+        form_data=request.form
+        uucms_no,name,course,batch=record
         fieldnames=["uucms_no","name","course","semester","batch","fathers_name","mothers_name","stream","sex","fathers_contact","mothers_contact","students_contact","whatsapp_no","photo"]
         record=dict(form_data)
+        record["uucms_no"]=uucms_no
+        record["name"]=name
+        record["course"]=course
+        record["batch"]=batch
+        print(record)
         if '' in record.values():
             return redirect("/failed")
         else:
-            with open(f"dept_{record['course'].lower()}_batch_{record['batch']}.csv","a+") as f:
-                writer=csv.DictWriter(f,fieldnames=fieldnames)
-                writer.writerow(record)
-                f.close()
+            if os.path.isfile(f"dept_{course.lower()}_batch_{batch}.csv") == False:
+
+                with open(f"dept_{course.lower()}_batch_{batch}.csv","a+",newline="") as f:
+                    writer=csv.DictWriter(f,fieldnames=fieldnames)
+                    writer.writeheader()
+                    writer.writerow(record)
+                    f.close()
+            else:
+
+                with open(f"dept_{record['course'].lower()}_batch_{record['batch']}.csv","a+",newline="") as f:
+                    writer=csv.DictWriter(f,fieldnames=fieldnames)
+                    writer.writerow(record)
+                    f.close()
+
             return redirect("/success")
-    
-    return render_template("student_registration_page.html",title="Student Registration")
+    return render_template("student_registration_page_2.html",title="Student Registration")
 
 
 if __name__ == "__main__":
+    # print(url_for('static'))
     app.run(host=data['http']['host'],debug=True)
