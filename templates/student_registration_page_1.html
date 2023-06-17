@@ -1,7 +1,7 @@
 {% extends "plain_page.html" %}
 {% block title %}{{ title }}{% endblock %}
 {% block body %}
-<img src="../static/imgs/logo.gif" class="ui small centered image">
+<img src="{{ url_for('static',filename='imgs/logo.gif') }}" class="ui small centered image">
 <h1 class="ui centered header">Student Registration Form</h1>
 
 <div class="ui raised very padded medium text  inverted orange container segment">
@@ -20,5 +20,27 @@
 
         <button type="submit" class="ui black centered button">Next</button>
     </form>
+    <table class="ui celled table">
+        <thead>
+          <tr><th>UUCMS No</th>
+          <th>Student Name</th>
+          <th>Form Link</th>
+        </tr></thead>
+        <tbody>
+            {% for uucms_no,name in records%}
+                <tr>
+                    <td data-label="UUCMS No">{{ uucms_no.strip() }}</td>
+                    <td data-label="Student Name">{{ name.strip() }}</td>
+                    <td data-label="Form Link">
+                        <a href="/student-registration/2/{{ uucms_no }}">
+                            <button class="ui black button">Get Form</button>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+
+          
+        </tbody>
+      </table>
 </div>
 {% endblock %}
