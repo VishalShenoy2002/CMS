@@ -28,16 +28,26 @@ class Student:
         self._cursor=self._connection.cursor()
 
     def exists(self):
-        query=f'SELECT * FROM students WHERE batch={self.batch} and uucms_no="{self.uucms_no}"'
+        query=f'SELECT count(*) FROM students WHERE batch={self.batch} and uucms_no="{self.uucms_no}"'
         self._cursor.execute(query)
-        self.records=self._cursor.fetchone()
-        try:
-            return len(self.records) is not 0
-        
-        except TypeError:
-            return None
+        self.records=self._cursor.fetchall()
+        print(int(self.records[0][0]))
+        return int(self.records[0][0]) != 0
+
     def get_student_name(self):
         query=f'SELECT name FROM students WHERE batch={self.batch} and uucms_no="{self.uucms_no}"'
         self._cursor.execute(query)
         self.name=self._cursor.fetchone()[0]
         return self.name
+    
+    def get_record(self):
+        query=f'SELECT uucms_no,name FROM students WHERE uucms_no="{self.uucms_no}"'
+        self._cursor.execute(query)
+        self.records=self._cursor.fetchall()
+        return self.records
+    
+    def get_full_record(self):
+        query=f'SELECT uucms_no,name,course,batch FROM students WHERE uucms_no="{self.uucms_no}"'
+        self._cursor.execute(query)
+        self.records=self._cursor.fetchall()
+        return self.records
