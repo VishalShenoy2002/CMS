@@ -23,7 +23,7 @@ test_generator=openai.Completion()
 app=Flask(__name__)
 app.config['UPLOAD_FOLDER']=os.path.join(os.getcwd(),"uploads")
 
-ALLOWED_EXTENSIONS = {'csv'}
+ALLOWED_EXTENSIONS = {'csv','png',"jpeg","jpg"}
 
 @app.route("/")
 def index():
@@ -54,7 +54,6 @@ def upload_batch():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'],"csv",secure_filename(file.filename)))
             db_functions.read_and_insert_batch(os.path.join(app.config['UPLOAD_FOLDER'],"csv",secure_filename(file.filename)))
             return render_template("upload_batch.html",title="Upload Batch", filename=file.filename,message={"text":"File Saved Successfully","message_type":"success"})
-            return "File Saved"
 
         elif util_functions.allowed_file(file.filename,ALLOWED_EXTENSIONS) == False:
             return render_template("upload_batch.html",title="Upload Batch", filename=file.filename,message={"text":"File Not Saved ","message_type":"error"})
@@ -169,7 +168,6 @@ def student_registration_page_1():
         student.department=form_data.get('department')
 
         if student.exists():
-            name=student.get_student_name()
             return render_template("student_registration_page_1.html",title="Student Registration",records=student.get_record())
 
     
@@ -187,31 +185,51 @@ def student_registration_page_2(uucms_no):
         return render_template("student_registration_page_2.html",title="Student Registration",uucms_no=record['uucms_no'],name=record['name'],department=record["course"],batch=record['batch'])
 
     if request.method == "POST":
+
         form_data=request.form
+        photo=request.files['photo']
+
+        
+        # unpacking record from previous page i.e /student-registration/1
         uucms_no,name,course,batch=record
+
         fieldnames=["uucms_no","name","course","semester","batch","fathers_name","mothers_name","stream","sex","fathers_contact","mothers_contact","students_contact","whatsapp_no","photo"]
+        
+        # Converting the form data into a dictionary because it'll be easier to insert into the csv file
         record=dict(form_data)
         record["uucms_no"]=uucms_no
         record["name"]=name
         record["course"]=course
         record["batch"]=batch
-        print(record)
+
+        # saving the photo if exists
+        if util_functions.allowed_file(photo.filename,ALLOWED_EXTENSIONS) == True:
+            photo.save(os.path.join(app.config['UPLOAD_FOLDER'],"pics",f"{record['uucms_no']}_pic.png"))
+        # checking if any field is left empty if it is left mpty then its redirected to failed page.
+        # else it stores the data in the csv if the it record doesn't exist
         if '' in record.values():
             return redirect("/failed")
+        
         else:
             if os.path.isfile(f"dept_{course.lower()}_batch_{batch}.csv") == False:
 
                 with open(f"dept_{course.lower()}_batch_{batch}.csv","a+",newline="") as f:
+                    reader=csv.DictReader(f)
                     writer=csv.DictWriter(f,fieldnames=fieldnames)
-                    writer.writeheader()
-                    writer.writerow(record)
+                    if record['uucms_no'] not in [row['uucms_no'] for row in reader]:
+                        writer.writeheader()
+                        writer.writerow(record)
                     f.close()
+                    del reader,writer,f
             else:
 
                 with open(f"dept_{record['course'].lower()}_batch_{record['batch']}.csv","a+",newline="") as f:
+                    reader=csv.DictReader(f)
                     writer=csv.DictWriter(f,fieldnames=fieldnames)
-                    writer.writerow(record)
+                    if record['uucms_no'] not in [row['uucms_no'] for row in reader]:
+                        writer.writerow(record)
                     f.close()
+                    del reader,writer,f
 
             return redirect("/success")
     return render_template("student_registration_page_2.html",title="Student Registration")
