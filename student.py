@@ -29,7 +29,7 @@ class Student:
         self._cursor=self._connection.cursor()
 
     def exists(self):
-        query=f'SELECT count(*) FROM students WHERE batch={self.batch} and uucms_no="{self.uucms_no}"'
+        query=f'SELECT count(*) FROM students WHERE batch={self.batch} and uucms_no="{self.uucms_no}";'
         self._cursor.execute(query)
         self.records=self._cursor.fetchall()
         print(int(self.records[0][0]))
