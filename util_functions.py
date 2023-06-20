@@ -26,3 +26,14 @@ def check_cred_query(username) -> str:
     query=f'SELECT password from faculty WHERE username="{username}"'
     return query
 
+def insert_basic_student_details(data:tuple):
+    uucms_no,name,course,semester,batch=data
+    query=f'INSERT INTO students(uucms_no,name,course,semester,batch)VALUES("{uucms_no}","{name}","{course}","{semester}","{batch}");'
+    del uucms_no,name,course,semester,batch
+    return query
+
+def update_student_record(uucms_no:str,data:tuple):
+    fathers_name,mothers_name,stream,sex,fathers_contact,mothers_contact,student_contact,whatsapp_no=data
+    query=f'UPDATE students SET fathers_name="{fathers_name}",mothers_name="{mothers_name}",stream="{stream}",sex="{sex}",fathers_contact="{fathers_contact}",mothers_contact="{mothers_contact}",students_contact="{student_contact}",whatsapp_no="{whatsapp_no}" where uucms_no="{uucms_no}";'
+    del fathers_name,mothers_name,stream,sex,fathers_contact,mothers_contact,student_contact,whatsapp_no
+    return query
