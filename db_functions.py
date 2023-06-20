@@ -36,8 +36,22 @@ def check_cred(username,password):
     dbpassword=cursor.fetchone()
     
     return password == dbpassword
+
+def read_and_insert_students(csvfile:str):
+    with open(csvfile,"r") as f:
+        reader=csv.reader(f)
+
+        records=[row for row in reader]
+        records=[util_functions.insert_basic_student_details(row) for row in records]
+
+        for index,query in enumerate(records,start=1):
+            try:
+                cursor.execute(query)
+                print(f"{index} records inserted.",end='\r')
+            except:
+                continue
+
+        connection.commit()
+
         
-
-
-
 
