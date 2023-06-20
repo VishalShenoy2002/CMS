@@ -7,6 +7,7 @@
 import mysql.connector as mysql
 import datetime
 import json
+import util_functions
 
 class Student:
 
@@ -41,13 +42,19 @@ class Student:
         return self.name
     
     def get_record(self):
-        query=f'SELECT uucms_no,name FROM students WHERE uucms_no="{self.uucms_no}"'
+        query=f'SELECT uucms_no,name,course,batch FROM students WHERE uucms_no="{self.uucms_no}"'
         self._cursor.execute(query)
         self.records=self._cursor.fetchall()
         return self.records
     
     def get_full_record(self):
-        query=f'SELECT uucms_no,name,course,batch FROM students WHERE uucms_no="{self.uucms_no}"'
+        query=f'SELECT uucms_no,name,course,batch,semester FROM students WHERE uucms_no="{self.uucms_no}"'
         self._cursor.execute(query)
         self.records=self._cursor.fetchall()
         return self.records
+    
+    def update(self,record:tuple):
+        query=util_functions.update_student_record(self.uucms_no,record)
+        print(query)
+        self._cursor.execute(query)
+        self._connection.commit()
