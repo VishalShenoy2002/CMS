@@ -2,7 +2,10 @@ from flask import Flask
 from flask import render_template,redirect,url_for
 from flask import request
 from werkzeug.utils import secure_filename
+
 from student import Student
+from faculty import Faculty
+
 import os
 import csv
 import openai
@@ -203,9 +206,12 @@ def student_registration_page_2(uucms_no):
         record["batch"]=batch
         record["semester"]=semester
 
+
+        if os.path.isdir(os.path.join(app.config['UPLOAD_FOLDER'],"pics","student")) == False:
+            os.makedirs(os.path.join(app.config['UPLOAD_FOLDER'],"pics","student"))
         # saving the photo if exists
         if util_functions.allowed_file(photo.filename,ALLOWED_EXTENSIONS) == True:
-            photo.save(os.path.join(app.config['UPLOAD_FOLDER'],"pics",f"{record['uucms_no']}_pic.png"))
+            photo.save(os.path.join(app.config['UPLOAD_FOLDER'],"pics",f"student_{record['uucms_no']}_pic.png"))
         # checking if any field is left empty if it is left mpty then its redirected to failed page.
         # else it stores the data in the csv if the it record doesn't exist
         if '' in record.values():
@@ -240,6 +246,30 @@ def student_registration_page_2(uucms_no):
 
 @app.route("/faculty-registration",methods=["GET","POST"])
 def faculty_registation():
+    if request.method == "POST":
+        faculty=Faculty()
+        faculty.faculty_id=request.form.get('faculty_id')
+        faculty.name=request.form.get('faculty_name')
+        faculty.faculty_email=request.form.get('faculty_email')
+        faculty.faculty_contact=request.form.get('faculty_contact')
+        faculty.department=request.form.get('department')
+        photo=request.files['photo']
+
+        if os.path.isdir(os.path.join(app.config['UPLOAD_FOLDER'],"pics","faculty")) == False:
+            os.makedirs(os.path.join(app.config['UPLOAD_FOLDER'],"pics","faculty"))
+
+
+        if util_functions.allowed_file(photo.filename,ALLOWED_EXTENSIONS) == True:
+            photo.save(os.path.join(app.config['UPLOAD_FOLDER'],"pics","faculty",f"faculty_{faculty.faculty_id}_pic.png"))
+
+        data=(faculty.faculty_id,faculty.name,faculty.faculty_email,faculty.faculty_contact,faculty.department)
+
+        if faculty.exists() == False:
+            faculty.add_faculty(data=data)
+            return redirect("/success")
+        else:
+            return redirect("/failed")
+
     return render_template("faculty_registration.html",title="Faculty Registration")
 
 if __name__ == "__main__":
