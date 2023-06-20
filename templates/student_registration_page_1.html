@@ -23,13 +23,17 @@
         <thead>
           <tr><th>UUCMS No</th>
           <th>Student Name</th>
+          <th>Course</th>
+          <th>Batch</th>
           <th>Form Link</th>
         </tr></thead>
         <tbody>
-            {% for uucms_no,name in records%}
+            {% for uucms_no,name,course,batch in records%}
                 <tr>
                     <td data-label="UUCMS No">{{ uucms_no.strip() }}</td>
                     <td data-label="Student Name">{{ name.strip() }}</td>
+                    <td data-label="Course">{{ course.strip() }}</td>
+                    <td data-label="Batch">{{ batch }}</td>
                     <td data-label="Form Link">
                         <a href="/student-registration/2/{{ uucms_no }}">
                             <button class="ui black button">Get Form</button>
