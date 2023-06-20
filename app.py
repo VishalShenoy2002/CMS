@@ -272,6 +272,10 @@ def faculty_registation():
 
     return render_template("faculty_registration.html",title="Faculty Registration")
 
+
+@app.route("/admin-dashboard")
+def admin_dashboard():
+    return render_template("admin_dashboard.html",title="Admin Dashboard")
 if __name__ == "__main__":
     # print(url_for('static'))
     app.run(host=data['http']['host'],debug=True)
