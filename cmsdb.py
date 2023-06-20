@@ -52,8 +52,11 @@ if connection.is_connected():
     faculty_name VARCHAR(250) NOT NULL,
     email        VARCHAR(100) NOT NULL,
     contact      VARCHAR(15)  NOT NULL,
+    department   VARCHAR(5) NOT NULL,
+    current_status VARCHAR(10) NOT NULL DEFAULT "Working",
     password     VARCHAR(64)  NOT NULL DEFAULT "4bddb0a3e00962416386fea5bca2cfd9759c9ba2ead9deeb65c1727277987698",
-    photo        BLOB         
+    photo        BLOB   
+
   );
   """
   # execute() will execute the query that is given as paramenter
@@ -73,7 +76,7 @@ if connection.is_connected():
 
   # Query to create courses table if it doesn't exist
   query="""
-  CREATE TABLE courses (
+  CREATE TABLE IF NOT EXISTS courses (
       course_name VARCHAR(100) PRIMARY KEY  NOT NULL,
       full_form VARCHAR(250) NOT NULL,
       num_of_sems INT NOT NULL
@@ -84,7 +87,7 @@ if connection.is_connected():
 
   # Query to create batchs table if it doesn't exist
   query="""
-  CREATE TABLE batches (
+  CREATE TABLE  IF NOT EXISTS batches (
       start_year INT,
       end_year INT,
       course_name VARCHAR(100),
