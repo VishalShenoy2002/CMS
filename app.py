@@ -178,11 +178,11 @@ def student_registration_page_2(uucms_no):
     student=Student()
     student.uucms_no=uucms_no
     record=student.get_full_record()[0]
-    fieldnames=["uucms_no","name","course","batch"]
+    fieldnames=["uucms_no","name","course","batch","semester"]
     if request.method == "GET":
         record=dict(zip(fieldnames,record))
         print(record)
-        return render_template("student_registration_page_2.html",title="Student Registration",uucms_no=record['uucms_no'],name=record['name'],department=record["course"],batch=record['batch'])
+        return render_template("student_registration_page_2.html",title="Student Registration",uucms_no=record['uucms_no'],name=record['name'],department=record['course'],batch=record['batch'],semester=record['semester'])
 
     if request.method == "POST":
 
@@ -191,7 +191,7 @@ def student_registration_page_2(uucms_no):
 
         
         # unpacking record from previous page i.e /student-registration/1
-        uucms_no,name,course,batch=record
+        uucms_no,name,course,batch,semester=record
 
         fieldnames=["uucms_no","name","course","semester","batch","fathers_name","mothers_name","stream","sex","fathers_contact","mothers_contact","students_contact","whatsapp_no","photo"]
         
@@ -201,6 +201,7 @@ def student_registration_page_2(uucms_no):
         record["name"]=name
         record["course"]=course
         record["batch"]=batch
+        record["semester"]=semester
 
         # saving the photo if exists
         if util_functions.allowed_file(photo.filename,ALLOWED_EXTENSIONS) == True:
@@ -211,6 +212,8 @@ def student_registration_page_2(uucms_no):
             return redirect("/failed")
         
         else:
+            student_data=(record['fathers_name'],record['mothers_name'],record['stream'],record['sex'],record['fathers_contact'],record['mothers_contact'],record['students_contact'],record['whatsapp_no'])
+            student.update(student_data)
             if os.path.isfile(f"dept_{course.lower()}_batch_{batch}.csv") == False:
 
                 with open(f"dept_{course.lower()}_batch_{batch}.csv","a+",newline="") as f:
@@ -221,6 +224,7 @@ def student_registration_page_2(uucms_no):
                         writer.writerow(record)
                     f.close()
                     del reader,writer,f
+
             else:
 
                 with open(f"dept_{record['course'].lower()}_batch_{record['batch']}.csv","a+",newline="") as f:
@@ -234,6 +238,9 @@ def student_registration_page_2(uucms_no):
             return redirect("/success")
     return render_template("student_registration_page_2.html",title="Student Registration")
 
+@app.route("/faculty-registration",methods=["GET","POST"])
+def faculty_registation():
+    return render_template("faculty_registration.html",title="Faculty Registration")
 
 if __name__ == "__main__":
     # print(url_for('static'))
