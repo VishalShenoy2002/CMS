@@ -31,15 +31,15 @@ if connection.is_connected():
   CREATE TABLE IF NOT EXISTS students (uucms_no VARCHAR(50) NOT NULL PRIMARY KEY,name VARCHAR(100) NOT NULL, course VARCHAR(5) NOT NULL,
     semester INT NOT NULL,
     batch INT NOT NULL,
-    fathers_name VARCHAR(100) NOT NULL,
-    mothers_name VARCHAR(100) NOT NULL,
-    stream VARCHAR(3)   NOT NULL,
-    sex VARCHAR(1)   NOT NULL,
-    fathers_contact VARCHAR(15)  NOT NULL,
-    mothers_contact VARCHAR(15)  NOT NULL,
-    students_contact VARCHAR(15)  NOT NULL,
-    whatsapp_no VARCHAR(15)  NOT NULL,
-    photo   BLOB  NOT NULL  DEFAULT "No Photo"
+    fathers_name VARCHAR(100) NOT NULL DEFAULT "Not Mentioned",
+    mothers_name VARCHAR(100) NOT NULL DEFAULT "Not Mentioned",
+    stream VARCHAR(10)   NOT NULL DEFAULT "NA",
+    sex VARCHAR(1)   NOT NULL DEFAULT "-",
+    fathers_contact VARCHAR(15)  NOT NULL DEFAULT "Not Mentioned",
+    mothers_contact VARCHAR(15)  NOT NULL DEFAULT "Not Mentioned",
+    students_contact VARCHAR(15)  NOT NULL DEFAULT "Not Mentioned",
+    whatsapp_no VARCHAR(15)  NOT NULL DEFAULT "Not Mentioned",
+    photo   BLOB
     );
     """
   # execute() will execute the query that is given as paramenter
@@ -53,7 +53,7 @@ if connection.is_connected():
     email        VARCHAR(100) NOT NULL,
     contact      VARCHAR(15)  NOT NULL,
     password     VARCHAR(64)  NOT NULL DEFAULT "4bddb0a3e00962416386fea5bca2cfd9759c9ba2ead9deeb65c1727277987698",
-    photo        BLOB         NOT NULL DEFAULT "No Photo"
+    photo        BLOB         
   );
   """
   # execute() will execute the query that is given as paramenter
