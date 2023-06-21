@@ -49,7 +49,11 @@ if commit_option.lower() == 'y':
             json.dump(data,f)
             f.close()
     else:
-        sys.exit("File Already Exists")
+        print("Overwriting File")
+        with open("config.json","w") as f:
+            json.dump(data,f)
+            f.close()
+        
 elif commit_option.lower() == 'n':
     sys.exit("Did not Commit. No operation Performed")
 
