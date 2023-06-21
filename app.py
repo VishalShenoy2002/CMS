@@ -135,7 +135,7 @@ def account():
 def teachers_dashboard():
     return render_template("teachers_dashboard.html",title="Teacher's Dashboard",timetable={1:"SE",2:"DAA",3:"GE"},topics={"27-09-2023":"Stack DS, Queue DS","26-09-2023":"Linked List DS"},date="28-09-2023")
 
-@app.route("/teachers-dashboard/subject-allotment",methods=["GET","POST"])
+@app.route("/admin-dashboard/subject-allotment",methods=["GET","POST"])
 def subject_allotment():
     if request.method == "POST":
         print(request.form)
