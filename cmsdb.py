@@ -88,25 +88,56 @@ if connection.is_connected():
 
     # Query to create batchs table if it doesn't exist
     query = """
-  CREATE TABLE  IF NOT EXISTS batches (
-      start_year INT,
-      end_year INT,
-      course_name VARCHAR(100),
-      FOREIGN KEY (course_name) REFERENCES courses(course_name)
-  );
+  CREATE TABLE IF NOT EXISTS batches (
+    batch_id VARCHAR(50) NOT NULL PRIMARY KEY,
+    year_start INT NOT NULL,
+    year_end INT NOT NULL,
+    course_name VARCHAR(5) NOT NULL,
+    FOREIGN KEY (course_name) REFERENCES courses (course_name)
+);
   """
     # execute() will execute the query that is given as paramenter
     cursor.execute(query)
 
     # Query to create subject table
     query = """
-  CREATE TABLE IF NOT EXISTS subjects (
-    subject_code VARCHAR(10) NOT NULL,
-    subject_name VARCHAR(100) NOT NULL,
-    course_name VARCHAR(5) NOT NULL,
-    FOREIGN KEY (course_name) REFERENCES courses (course_name)
-  );
+CREATE TABLE IF NOT EXISTS subjects (
+  subject_code VARCHAR(10) NOT NULL PRIMARY KEY,
+  subject_name VARCHAR(100) NOT NULL,
+  course_name VARCHAR(5),
+  FOREIGN KEY (course_name) REFERENCES courses (course_name)
+);
   """
+    
+    # execute() will execute the query that is given as paramenter
+    cursor.execute(query)
+
+    # Query to create subjects_for_batch table
+    query = """
+ CREATE TABLE IF NOT EXISTS subjects_for_batch (
+  batch_id VARCHAR(50) NOT NULL,
+  subject_1 VARCHAR(10) NOT NULL DEFAULT 'N/A',
+  subject_2 VARCHAR(10) NOT NULL DEFAULT 'N/A',
+  subject_3 VARCHAR(10) NOT NULL DEFAULT 'N/A',
+  subject_4 VARCHAR(10) NOT NULL DEFAULT 'N/A',
+  subject_5 VARCHAR(10) NOT NULL DEFAULT 'N/A',
+  subject_6 VARCHAR(10) NOT NULL DEFAULT 'N/A',
+  subject_7 VARCHAR(10) NOT NULL DEFAULT 'N/A',
+  lab_1 VARCHAR(10) NOT NULL DEFAULT 'N/A',
+  lab_2 VARCHAR(10) NOT NULL DEFAULT 'N/A',
+  FOREIGN KEY (batch_id) REFERENCES batches (batch_id),
+  FOREIGN KEY (subject_1) REFERENCES subjects (subject_code),
+  FOREIGN KEY (subject_2) REFERENCES subjects (subject_code),
+  FOREIGN KEY (subject_3) REFERENCES subjects (subject_code),
+  FOREIGN KEY (subject_4) REFERENCES subjects (subject_code),
+  FOREIGN KEY (subject_5) REFERENCES subjects (subject_code),
+  FOREIGN KEY (subject_6) REFERENCES subjects (subject_code),
+  FOREIGN KEY (subject_7) REFERENCES subjects (subject_code),
+  FOREIGN KEY (lab_1) REFERENCES subjects (subject_code),
+  FOREIGN KEY (lab_2) REFERENCES subjects (subject_code)
+);
+
+    """
     
     # execute() will execute the query that is given as paramenter
     cursor.execute(query)
