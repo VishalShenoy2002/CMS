@@ -37,3 +37,6 @@ def update_student_record(uucms_no:str,data:tuple):
     query=f'UPDATE students SET fathers_name="{fathers_name}",mothers_name="{mothers_name}",stream="{stream}",sex="{sex}",fathers_contact="{fathers_contact}",mothers_contact="{mothers_contact}",students_contact="{student_contact}",whatsapp_no="{whatsapp_no}" where uucms_no="{uucms_no}";'
     del fathers_name,mothers_name,stream,sex,fathers_contact,mothers_contact,student_contact,whatsapp_no
     return query
+
+def generate_subject_code(syllabus_type:str,course_name:str,subject_abbreviation:str):
+    return f"{syllabus_type}-{course_name}-{subject_abbreviation}".upper()
