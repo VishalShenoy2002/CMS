@@ -1,0 +1,56 @@
+{% extends "plain_page.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block body %}
+<h1 class="ui centered header">Add Subject</h1>
+<div class="ui raised very padded medium text inverted orange container segment">
+    <form action="" method="post" enctype="multipart/form-data">
+        <label for="faculty details" class="ui large header">Subject Details</label><br><br>
+        <div class="ui fluid input">
+            <input type="text" name="subject_name" id="subject_name" class="ui input" placeholder="Subject Name">
+        </div><br>
+        
+        <div class="ui fluid input">
+            <input type="text" name="course_name" id="course_name" class="ui input" placeholder="Department">
+        </div><br>
+
+        <div class="inline fields">
+            <label>Subject Type</label>
+            <div class="field">
+                <div class="ui radio checkbox">
+                    <input type="radio" name="subject_type" value="core" required>
+                    <label>Core</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui radio checkbox">
+                    <input type="radio" name="subject_type" value="non-core" required>
+                    <label>Non-Core</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui radio checkbox">
+                    <input type="radio" name="subject_type" value="extra curicular">
+                    <label>Extra Curicular</label>
+                </div>
+            </div>
+        </div><br>
+
+        <div class="inline fields">
+            <label>Syllabus Type</label>
+            <div class="field">
+                <div class="ui radio checkbox">
+                    <input type="radio" name="syllabus_type" value="nep" required>
+                    <label>NEP</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui radio checkbox">
+                    <input type="radio" name="syllabus_type" value="cbcs" required>
+                    <label>CBCS</label>
+                </div>
+            </div>
+        </div><br>
+        <button type="submit" class="ui black centered button">Add Subject</button>
+    </form>
+</div>
+{% endblock %}
