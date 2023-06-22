@@ -102,8 +102,9 @@ if connection.is_connected():
     # Query to create subject table
     query = """
 CREATE TABLE IF NOT EXISTS subjects (
-  subject_code VARCHAR(10) NOT NULL PRIMARY KEY,
+  subject_code VARCHAR(20) NOT NULL PRIMARY KEY,
   subject_name VARCHAR(100) NOT NULL,
+  subject_type VARCHAR(50) NOT NULL DEFAULT 'Core',
   course_name VARCHAR(5),
   FOREIGN KEY (course_name) REFERENCES courses (course_name)
 );
@@ -116,15 +117,15 @@ CREATE TABLE IF NOT EXISTS subjects (
     query = """
  CREATE TABLE IF NOT EXISTS subjects_for_batch (
   batch_id VARCHAR(50) NOT NULL,
-  subject_1 VARCHAR(10) NOT NULL DEFAULT 'N/A',
-  subject_2 VARCHAR(10) NOT NULL DEFAULT 'N/A',
-  subject_3 VARCHAR(10) NOT NULL DEFAULT 'N/A',
-  subject_4 VARCHAR(10) NOT NULL DEFAULT 'N/A',
-  subject_5 VARCHAR(10) NOT NULL DEFAULT 'N/A',
-  subject_6 VARCHAR(10) NOT NULL DEFAULT 'N/A',
-  subject_7 VARCHAR(10) NOT NULL DEFAULT 'N/A',
-  lab_1 VARCHAR(10) NOT NULL DEFAULT 'N/A',
-  lab_2 VARCHAR(10) NOT NULL DEFAULT 'N/A',
+  subject_1 VARCHAR(20) NOT NULL DEFAULT 'N/A',
+  subject_2 VARCHAR(20) NOT NULL DEFAULT 'N/A',
+  subject_3 VARCHAR(20) NOT NULL DEFAULT 'N/A',
+  subject_4 VARCHAR(20) NOT NULL DEFAULT 'N/A',
+  subject_5 VARCHAR(20) NOT NULL DEFAULT 'N/A',
+  subject_6 VARCHAR(20) NOT NULL DEFAULT 'N/A',
+  subject_7 VARCHAR(20) NOT NULL DEFAULT 'N/A',
+  lab_1 VARCHAR(20) NOT NULL DEFAULT 'N/A',
+  lab_2 VARCHAR(20) NOT NULL DEFAULT 'N/A',
   FOREIGN KEY (batch_id) REFERENCES batches (batch_id),
   FOREIGN KEY (subject_1) REFERENCES subjects (subject_code),
   FOREIGN KEY (subject_2) REFERENCES subjects (subject_code),
