@@ -104,8 +104,9 @@ if connection.is_connected():
 CREATE TABLE IF NOT EXISTS subjects (
   subject_code VARCHAR(20) NOT NULL PRIMARY KEY,
   subject_name VARCHAR(100) NOT NULL,
+  course_name VARCHAR(5) NOT NULL,
   subject_type VARCHAR(50) NOT NULL DEFAULT 'Core',
-  course_name VARCHAR(5),
+  syllabus_type VARCHAR(10) NOT NULL DEFAULT 'NEP',
   FOREIGN KEY (course_name) REFERENCES courses (course_name)
 );
   """
