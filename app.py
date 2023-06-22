@@ -276,6 +276,21 @@ def faculty_registation():
 @app.route("/admin-dashboard")
 def admin_dashboard():
     return render_template("admin_dashboard.html",title="Admin Dashboard")
+
+@app.route("/admin-dashboard/add-subject",methods=["GET","POST"])
+def add_subject():
+    if request.method == "POST":
+        subject_name=request.form.get("subject_name")
+        course_name=request.form.get("course_name")
+        subject_type=request.form.get("subject_type")
+        syllabus_type=request.form.get("syllabus_type")
+        subject_abbreviation="".join([x[0] for x in subject_name.split(' ')])
+        subject_code=util_functions.generate_subject_code(syllabus_type,course_name,subject_abbreviation)
+
+        print(subject_code)
+    return render_template("add_subject.html",title="Add Subject")
+
+
 if __name__ == "__main__":
     # print(url_for('static'))
     app.run(host=data['http']['host'],debug=True)
