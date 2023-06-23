@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block title %}{{ title }}{% endblock %}
 {% block body %}
-<div class="ui raised very padded medium text container segment">
-    <h1>Attendance</h1>
+<h1 class="ui centered header">Attendance</h1>
+<div class="ui raised very padded medium inverted orange text  container segment">
     <label for="note">Please enter the student batch details to get the student list.</label><br><br>
     <form action="" method="post" enctype="multipart/form-data">
         <div class="ui fluid input">
@@ -12,7 +12,7 @@
             <input type="number" class="ui input" placeholder="Year of Admission" name="year_of_admission" id="year_of_admission"><br>
         </div><br>
 
-        <button type="submit" class="ui green button">Get Student List</button>
+        <button type="submit" class="ui black button">Get Student List</button>
     </form><br>
 
 </div>
