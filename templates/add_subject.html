@@ -12,6 +12,10 @@
         <div class="ui fluid input">
             <input type="text" name="course_name" id="course_name" class="ui input" placeholder="Department">
         </div><br>
+        
+        <div class="ui fluid input">
+            <input type="number" name="semester" id="semester" class="ui input" placeholder="Semester">
+        </div><br>
 
         <div class="inline fields">
             <label>Subject Type</label>
@@ -29,27 +33,18 @@
             </div>
             <div class="field">
                 <div class="ui radio checkbox">
-                    <input type="radio" name="subject_type" value="extra curicular">
-                    <label>Extra Curicular</label>
+                    <input type="radio" name="subject_type" value="open elective">
+                    <label>Open Elective</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui radio checkbox">
+                    <input type="radio" name="subject_type" value="skill enhancement course">
+                    <label>Skill Enhancement Course</label>
                 </div>
             </div>
         </div><br>
 
-        <div class="inline fields">
-            <label>Syllabus Type</label>
-            <div class="field">
-                <div class="ui radio checkbox">
-                    <input type="radio" name="syllabus_type" value="nep" required>
-                    <label>NEP</label>
-                </div>
-            </div>
-            <div class="field">
-                <div class="ui radio checkbox">
-                    <input type="radio" name="syllabus_type" value="cbcs" required>
-                    <label>CBCS</label>
-                </div>
-            </div>
-        </div><br>
         <button type="submit" class="ui black centered button">Add Subject</button>
     </form>
 </div>
