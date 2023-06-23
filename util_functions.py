@@ -9,9 +9,9 @@ def allowed_file(filename:str,extensions:set) -> bool:
 
 # insert_into_student() is used to generate an insert query for the students table
 def insert_into_student(data:tuple) -> str:
-    uucms_no,name,course,semester,batch,fathers_name,mothers_name,stream,sex,fathers_contact,mothers_contact,students_contact,whatsapp_no=data
-    query= f'INSERT INTO students(uucms_no,name,course,semester,batch,fathers_name,mothers_name,stream,sex,fathers_contact,mothers_contact,students_contact,whatsapp_no,photo)VALUES("{uucms_no}","{name}","{course}","{semester}","{batch}","{fathers_name}","{mothers_name}","{stream}","{sex}","{fathers_contact}","{mothers_contact}","{students_contact}","{whatsapp_no}","123");'
-    del uucms_no,name,course,semester,batch,fathers_name,mothers_name,stream,sex,fathers_contact,mothers_contact,students_contact,whatsapp_no
+    uucms_no,name,course,semester,batch=data
+    query= f'INSERT INTO students(uucms_no,name,course,semester,batch)VALUES("{uucms_no}","{name}","{course}","{semester}","{batch}");'
+    del uucms_no,name,course,semester,batch
     return query
 
 # insert_into_uploaded_files() is used to generate an insert query for the uploaded_files table
