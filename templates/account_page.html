@@ -1,24 +1,27 @@
 {% extends "base.html" %}
 {% block title %}{{ title }}{% endblock %}
 {% block body %}
-<div class="ui raised very padded medium text container segment">
-    <h1>Your Account</h1>
-    <table class="ui celled table">
-        <thead>
-          <tr><th>Title</th>
+<h1 class="ui centered header">Your Account</h1>
+<div class="ui raised very padded medium inverted orange text container segment">
+  <div class="ui raised very padded medium inverted yellow text segment">
+    <table class="ui inverted black striped table">
+      <thead>
+        <tr>
+          <th>Title</th>
           <th>Details</th>
-        </tr></thead>
-        <tbody>
-            {% for details_title, details_info in details_dict.items() %}
-            <tr>
-                <td data-label="Title">{{ details_title }}</td>
-                <td data-label="Information">{{ details_info }}</td>
-            </tr>
-            {% endfor %}
-          
-        </tbody>
-      </table>
-    
+        </tr>
+      </thead>
+      <tbody>
+        {% for details_title, details_info in details_dict.items() %}
+        <tr>
+          <td data-label="Title">{{ details_title }}</td>
+          <td data-label="Information">{{ details_info }}</td>
+        </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+  </div>
 </div>
 
 {% endblock %}
