@@ -111,6 +111,7 @@ CREATE TABLE IF NOT EXISTS subjects (
   course_name VARCHAR(5) NOT NULL,
   subject_type VARCHAR(50) NOT NULL DEFAULT 'Core',
   syllabus_type VARCHAR(10) NOT NULL DEFAULT 'NEP',
+  semester int(2) not null default 1,
   FOREIGN KEY (course_name) REFERENCES courses (course_name)
 );
   """
