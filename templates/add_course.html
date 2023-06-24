@@ -1,0 +1,22 @@
+{% extends "plain_page.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block body %}
+<h1 class="ui centered header">Add Course</h1>
+<div class="ui raised very padded medium text  inverted orange container segment">
+    <form action="" method="post" enctype="multipart/form-data">
+        <label for="faculty details" class="ui large header">Course Details</label><br><br>
+        <div class="ui fluid input">
+            <input type="text" name="course_name" id="course_name" class="ui input" placeholder="Course Name" required>
+        </div><br>
+
+        <div class="ui fluid input">
+            <input type="text" name="full_form" id="full_form" class="ui input" placeholder="Course Name (Full Form)" required>
+        </div><br>
+
+        <div class="ui fluid input">
+            <input type="number" name="no_of_sems" id="no_of_sems" class="ui input" placeholder="Number of Semesters" required>
+        </div><br>
+        <button type="submit" class="ui black centered button">Add Course</button>
+    
+</div>
+{% endblock %}
