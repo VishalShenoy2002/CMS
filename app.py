@@ -11,6 +11,7 @@ import csv
 import openai
 import hashlib
 import json
+import mysql
 
 import util_functions
 import db_functions
@@ -160,6 +161,9 @@ def login_page():
         print(f"Username: {username} Password: {password}")
     return render_template("login_page.html",title="Login")
 
+@app.route("/student-registration",methods=["GET","POST"])
+def student_registration():
+    return render_template("student_registration_info_page.html",title="Student Registration")
 @app.route("/student-registration/1",methods=["GET","POST"])
 def student_registration_page_1():
     student=Student()
@@ -280,15 +284,42 @@ def admin_dashboard():
 @app.route("/admin-dashboard/add-subject",methods=["GET","POST"])
 def add_subject():
     if request.method == "POST":
+        syllabus_type="NEP"
+
         subject_name=request.form.get("subject_name")
         course_name=request.form.get("course_name")
         subject_type=request.form.get("subject_type")
-        syllabus_type=request.form.get("syllabus_type")
+        semester=request.form.get("semester")
+        
         subject_abbreviation="".join([x[0] for x in subject_name.split(' ')])
         subject_code=util_functions.generate_subject_code(syllabus_type,course_name,subject_abbreviation)
-
-        print(subject_code)
+        
+        record=(subject_code,subject_name,course_name,subject_type,semester)
+        try:
+            db_functions.insert_subject(record)
+        except mysql.connector.errors.IntegrityError:
+            count=1
+            new_key=f"{subject_code}{count}"
+            record=(new_key,subject_name,course_name,subject_type,semester)
+            db_functions.insert_subject(record)
+            count+=1
+        
+        
+        
     return render_template("add_subject.html",title="Add Subject")
+
+@app.route("/admin-dashboard/add-course",methods=["GET","POST"])
+def add_course():
+    if request.method == "POST":
+        course_name=request.form.get("course_name")
+        full_form=request.form.get("full_form")
+        no_of_sems=request.form.get("no_of_sems")
+
+        record=(course_name,full_form,no_of_sems)
+        db_functions.insert_course(record)
+
+    return render_template("add_course.html",title="Add Course")
+
 
 
 if __name__ == "__main__":
