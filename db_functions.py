@@ -52,6 +52,17 @@ def read_and_insert_students(csvfile:str):
                 continue
 
         connection.commit()
+        del records,reader
 
-        
+def insert_course(data:tuple):
+    query=util_functions.insert_course_query(data)
+    cursor.execute(query)
+    connection.commit()  
+    del query 
+
+def insert_subject(data:tuple):
+    query=util_functions.insert_subject_query(data)
+    cursor.execute(query)  
+    connection.commit()
+    del query
 
