@@ -1,0 +1,29 @@
+{% extends "plain_page.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block body %}
+<h1 class="ui centered header">Student Registration</h1>
+<div class="ui raised very padded medium text inverted orange container segment">
+    <label for="note"><b>Note:</b> Please enter the student details in the following format</label>
+    <table class="ui inverted black striped table">
+        <thead>
+            <tr>
+            <th>Department</th>
+            <th>Batch</th>
+            <th>Roll Number</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-label="Department">BCA</td>
+            <td data-label="Batch">2020-21</td>
+            <td data-label="Roll Number">U03EV21SXXXX</td>
+          </tr>
+          
+        </tbody>
+    </table>
+    <label for="note"><h4>Please Press the <b>"Start Registration"</b> Button to Continue</h4></label><br><br>
+    <a href="/student-registration/1">
+        <button class="ui black button">Start Registration</button>
+    </a>
+</div>
+{% endblock %}
