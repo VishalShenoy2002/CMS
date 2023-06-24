@@ -40,3 +40,15 @@ def update_student_record(uucms_no:str,data:tuple):
 
 def generate_subject_code(syllabus_type:str,course_name:str,subject_abbreviation:str):
     return f"{syllabus_type}-{course_name}-{subject_abbreviation}".upper()
+
+def insert_course_query(data:tuple):
+    course_name,full_form,num_of_sems=data
+    query=f'INSERT INTO courses(course_name,full_form,num_of_sems) VALUES("{course_name}","{full_form}",{num_of_sems});'
+    del course_name,full_form,num_of_sems
+    return query
+
+def insert_subject_query(data:tuple):
+    subject_code,subject_name,course_name,subject_type,semester=data
+    query=f'INSERT INTO subjects(subject_code,subject_name,course_name,subject_type,semester) VALUES("{subject_code}","{subject_name.title()}","{course_name}","{subject_type}",{semester});'
+    del subject_code,subject_name,course_name,subject_type,semester
+    return query
