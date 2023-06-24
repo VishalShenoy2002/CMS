@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block title %}{{ title }}{% endblock %}
 {% block body %}
-<div class="ui raised very padded text container segment">
-    <h1>Upload Batch</h1>
+<h1 class="ui centered header">Upload Batch</h1>
+<div class="ui raised very padded inverted orange text container segment">
     <label for="note">
         <b>Note:</b>The file should end with (.csv) and the filename should be as follows:<br><br>
         <b>Format: </b>dept_department_batch_year_of_admission.csv <br>
@@ -12,26 +12,19 @@
         <b>Note:</b>The format of the CSV file should be as follows. The column names and order should exactly
         be the same.<br><br>
         <ul class="ui list">
-            <li class="">uucms_no</li>
-            <li class="">name</li>
-            <li class="">course</li>
-            <li class="">semester</li>
-            <li class="">batch</li>
-            <li class="">fathers_name</li>
-            <li class="">mothers_name</li>
-            <li class="">stream</li>
-            <li class="">sex</li>
-            <li class="">fathers_contact</li>
-            <li class="">mothers_contact</li>
-            <li class="">students_contact</li>
-            <li class="">whatsapp_no</li>
+            <li class="item">uucms_no</li>
+            <li class="item">name</li>
+            <li class="item">course</li>
+            <li class="item">semester</li>
+            <li class="item">batch</li>
+            
         </ul>
     </label><br><br>
     <form action="" method="post" enctype="multipart/form-data">
         <div class="ui input">
             <input type="file" name="file" id="file" class="ui input">
         </div>
-        <button type="submit" class="ui violet button">Upload</button>
+        <button type="submit" class="ui black button">Upload</button>
     </form><br><br>
     <div class="ui horizontal divider">
         Or
@@ -41,7 +34,7 @@
             Drop to upload your files
             <input type="file" name="file" id="file">
         </div><br>
-        <button type="submit" class="ui violet button">Upload</button>
+        <button type="submit" class="ui black button">Upload</button>
     </form><br><br>
     <a href="/admission">
         <button class="ui black button">Go Back</button>
