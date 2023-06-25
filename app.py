@@ -61,8 +61,6 @@ def upload_batch():
         batch.department=details[1]
         batch.start_year=int(details[3])
         batch.set_end_year()
-        print(batch.end_year)
-        # print(batch.start_year,batch.department)
         batch.create_batch()
         
         
@@ -230,7 +228,7 @@ def student_registration_page_2(uucms_no):
             os.makedirs(os.path.join(app.config['UPLOAD_FOLDER'],"pics","student"))
         # saving the photo if exists
         if util_functions.allowed_file(photo.filename,ALLOWED_EXTENSIONS) == True:
-            photo.save(os.path.join(app.config['UPLOAD_FOLDER'],"pics",f"student_{record['uucms_no']}_pic.png"))
+            photo.save(os.path.join(app.config['UPLOAD_FOLDER'],"pics","student",f"student_{record['uucms_no']}_pic.png"))
         # checking if any field is left empty if it is left mpty then its redirected to failed page.
         # else it stores the data in the csv if the it record doesn't exist
         if '' in record.values():
