@@ -291,18 +291,18 @@ def add_subject():
         subject_type=request.form.get("subject_type")
         semester=request.form.get("semester")
         
-        subject_abbreviation="".join([x[0] for x in subject_name.split(' ')])
+        subject_abbreviation="".join([x[0] for x in subject_name.strip().split(' ')])
         subject_code=util_functions.generate_subject_code(syllabus_type,course_name,subject_abbreviation)
         
         record=(subject_code,subject_name,course_name,subject_type,semester)
         try:
             db_functions.insert_subject(record)
         except mysql.connector.errors.IntegrityError:
-            count=1
+            count=db_functions.get_similar_key_count(subject_code) + 1
             new_key=f"{subject_code}{count}"
             record=(new_key,subject_name,course_name,subject_type,semester)
             db_functions.insert_subject(record)
-            count+=1
+
         
         
         
