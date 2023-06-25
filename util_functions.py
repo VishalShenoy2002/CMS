@@ -57,3 +57,8 @@ def get_similar_key_count_query(key:str):
     query= f'SELECT count(*) FROM subjects where subject_code regexp "^{key}[0-9]";'
     return query
 
+def insert_batch_query(data:tuple):
+    batch_id,year_start,year_end,course_name,year_code=data
+    query=f'INSERT INTO batches(batch_id,year_start,year_end,course_name,year_code) VALUES("{batch_id}",{year_start},{year_end},"{course_name}","{year_code}");'
+    del batch_id,year_start,year_end,course_name,year_code
+    return query
