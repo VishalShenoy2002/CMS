@@ -22,9 +22,7 @@ class Student:
             data=json.load(f)
             data=data['db']
             f.close()
-        
 
-        
         self._connection=mysql.connect(host=data['host'],user=data['user'],passwd=data['password'],database=data['database'])
         self._cursor=self._connection.cursor()
 
