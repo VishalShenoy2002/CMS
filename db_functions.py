@@ -73,3 +73,9 @@ def get_similar_key_count(key:str):
     count=count[0]
     return int(count)
 
+def insert_batch(data:tuple):
+    query=util_functions.insert_batch_query(data)
+    cursor.execute(query)
+    connection.commit()
+    del query
+
