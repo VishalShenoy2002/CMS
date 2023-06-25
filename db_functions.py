@@ -66,3 +66,10 @@ def insert_subject(data:tuple):
     connection.commit()
     del query
 
+def get_similar_key_count(key:str):
+    query=util_functions.get_similar_key_count_query(key)
+    cursor.execute(query)
+    count=cursor.fetchone()
+    count=count[0]
+    return int(count)
+
