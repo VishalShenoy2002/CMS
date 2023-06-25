@@ -29,7 +29,7 @@ if connection.is_connected():
     # Query to create courses table if it doesn't exist
     query = """
   CREATE TABLE IF NOT EXISTS courses (
-      course_name VARCHAR(100) PRIMARY KEY  NOT NULL,
+      course_name VARCHAR(5) PRIMARY KEY  NOT NULL,
       full_form VARCHAR(250) NOT NULL,
       num_of_sems INT NOT NULL
   );
@@ -53,7 +53,9 @@ if connection.is_connected():
     students_contact VARCHAR(15)  NOT NULL DEFAULT "Not Mentioned",
     whatsapp_no VARCHAR(15)  NOT NULL DEFAULT "Not Mentioned",
     photo   BLOB,
-    FOREIGN KEY (course) REFERENCES courses (course_name)
+    year_code VARCHAR(15) NOT NULL
+    FOREIGN KEY (course) REFERENCES courses(course_name),
+    FOREIGN KEY (year_code) REFERENCES batches(year_code)
     );
     """
     # execute() will execute the query that is given as paramenter
@@ -97,6 +99,7 @@ if connection.is_connected():
     year_start INT NOT NULL,
     year_end INT NOT NULL,
     course_name VARCHAR(5) NOT NULL,
+    year_code varchar(15) NOT NULL,
     FOREIGN KEY (course_name) REFERENCES courses (course_name)
 );
   """
