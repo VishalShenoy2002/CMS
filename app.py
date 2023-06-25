@@ -5,6 +5,7 @@ from werkzeug.utils import secure_filename
 
 from student import Student
 from faculty import Faculty
+from batch import Batch
 
 import os
 import csv
@@ -49,13 +50,27 @@ def admission():
 def upload_batch():
     if request.method == "POST":
         if 'file' not in request.form:
-            print("No File Uploaded")
+            # print("No File Uploaded")
+            pass
             
 
         file=request.files['file']
+        details=file.filename.split('.')[0].split('_')
+        # Configuring Batch
+        batch=Batch()
+        batch.department=details[1]
+        batch.start_year=int(details[3])
+        batch.set_end_year()
+        print(batch.end_year)
+        # print(batch.start_year,batch.department)
+        batch.create_batch()
+        
+        
+
 
         if util_functions.allowed_file(file.filename,ALLOWED_EXTENSIONS) == True:
             file.save(os.path.join(app.config['UPLOAD_FOLDER'],"csv",secure_filename(file.filename)))
+            
             db_functions.read_and_insert_batch(os.path.join(app.config['UPLOAD_FOLDER'],"csv",secure_filename(file.filename)))
             return render_template("upload_batch.html",title="Upload Batch", filename=file.filename,message={"text":"File Saved Successfully","message_type":"success"})
 
@@ -171,7 +186,7 @@ def student_registration_page_1():
         form_data=request.form
         
         student.uucms_no=form_data.get('uucms_no')
-        student.batch=form_data.get('batch')
+        student.batch=int(form_data.get('batch').split("-")[0])
         student.department=form_data.get('department')
 
         if student.exists():
@@ -320,6 +335,9 @@ def add_course():
 
     return render_template("add_course.html",title="Add Course")
 
+@app.route("/admin-dashboard/manage-batch-subjects",methods=["GET","POST"])
+def manage_batch_subjects_page():
+    return render_template("manage_batch_subjects.html",title="Manage Batch Subjects")
 
 
 if __name__ == "__main__":
