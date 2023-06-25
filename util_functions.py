@@ -52,3 +52,8 @@ def insert_subject_query(data:tuple):
     query=f'INSERT INTO subjects(subject_code,subject_name,course_name,subject_type,semester) VALUES("{subject_code}","{subject_name.title()}","{course_name}","{subject_type}",{semester});'
     del subject_code,subject_name,course_name,subject_type,semester
     return query
+
+def get_similar_key_count_query(key:str):
+    query= f'SELECT count(*) FROM subjects where subject_code regexp "^{key}[0-9]";'
+    return query
+
