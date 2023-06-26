@@ -4,16 +4,41 @@
 <h1 class="ui centered header">Manage Batch Subjects</h1>
 <div class="ui raised very padded medium text inverted orange container segment">
     <form action="" method="post" enctype="multipart/form-data">
-        <label for="batch details" class="ui large header">Enter Details</label><br><br>
-        <div class="ui selection dropdown">
-            <input type="hidden" name="gender">
-            <i class="dropdown icon"></i>
-            <div class="default text">Batch</div>
-            <div class="menu">
-              <div class="item" data-value="1">Male</div>
-              <div class="item" data-value="0">Female</div>
-            </div>
-          </div>
+        <label for="batch details" class="ui large header">Batch Details</label><br><br>
+        <div class="ui fluid input">
+          <input type="text" name="batch_id" id="batch_id" class="ui input" placeholder="Batch ID" required>
+        </div><br>
+        <label for="theory subjects information" class="ui large header">Theory Subjects</label><br><br>
+        <div class="ui fluid input">
+          <input type="text" name="subject_1" id="subject_1" class="ui input" placeholder="Subject 1" required>
+        </div><br>
+        <div class="ui fluid input">
+          <input type="text" name="subject_2" id="subject_2" class="ui input" placeholder="Subject 2" required>
+        </div><br>
+        <div class="ui fluid input">
+          <input type="text" name="subject_3" id="subject_3" class="ui input" placeholder="Subject 3" required>
+        </div><br>
+        <div class="ui fluid input">
+          <input type="text" name="subject_4" id="subject_4" class="ui input" placeholder="Subject 4" required>
+        </div><br>
+        <div class="ui fluid input">
+          <input type="text" name="subject_5" id="subject_5" class="ui input" placeholder="Subject 5" required>
+        </div><br>
+        <div class="ui fluid input">
+          <input type="text" name="subject_6" id="subject_6" class="ui input" placeholder="Subject 6" required>
+        </div><br>
+        <div class="ui fluid input">
+          <input type="text" name="subject_7" id="subject_7" class="ui input" placeholder="Subject 7" required>
+        </div><br>
+        <label for="lab information" class="ui large header">Labs</label><br><br>
+        <div class="ui fluid input">
+          <input type="text" name="lab_1" id="lab_1" class="ui input" placeholder="Lab 1">
+        </div><br>
+        <div class="ui fluid input">
+          <input type="text" name="lab_2" id="lab_2" class="ui input" placeholder="Lab 2">
+        </div><br>
+        <button type="submit" class="ui black centered button">Next</button>
+      </form>
 </div>
 
 {% endblock %}
