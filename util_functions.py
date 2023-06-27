@@ -62,3 +62,8 @@ def insert_batch_query(data:tuple):
     query=f'INSERT INTO batches(batch_id,year_start,year_end,course_name,year_code) VALUES("{batch_id}",{year_start},{year_end},"{course_name}","{year_code}");'
     del batch_id,year_start,year_end,course_name,year_code
     return query
+
+def generate_batch_table_view_query(department:str,batch:int):
+
+    query=f'CREATE VIEW dept_{department}_batch_{batch} as SELECT uucms_no,name,fathers_name,mothers_name,fathers_contact,mothers_contact,students_contact from students WHERE batch={batch} and course="{department}";'
+    return query
