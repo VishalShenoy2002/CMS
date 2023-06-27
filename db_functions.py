@@ -79,3 +79,8 @@ def insert_batch(data:tuple):
     connection.commit()
     del query
 
+def generate_batch_table_view(department:str,batch:int):
+    query=util_functions.generate_batch_table_view_query(department,batch)
+    cursor.execute(query)
+    connection.commit()
+    del query
