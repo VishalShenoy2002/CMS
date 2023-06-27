@@ -43,6 +43,9 @@ class Batch:
         record=(batch_code,self.start_year,self.end_year,self.department,year_code)
         db_functions.insert_batch(record)
 
+    def generate_batch_table(self):
+        db_functions.generate_batch_table_view(self.department,self.start_year)
+
 
 
 
