@@ -62,14 +62,15 @@ def upload_batch():
         batch.start_year=int(details[3])
         batch.set_end_year()
         batch.create_batch()
+
         
         
 
 
         if util_functions.allowed_file(file.filename,ALLOWED_EXTENSIONS) == True:
             file.save(os.path.join(app.config['UPLOAD_FOLDER'],"csv",secure_filename(file.filename)))
-            
             db_functions.read_and_insert_batch(os.path.join(app.config['UPLOAD_FOLDER'],"csv",secure_filename(file.filename)))
+            batch.generate_batch_table()
             return render_template("upload_batch.html",title="Upload Batch", filename=file.filename,message={"text":"File Saved Successfully","message_type":"success"})
 
         elif util_functions.allowed_file(file.filename,ALLOWED_EXTENSIONS) == False:
