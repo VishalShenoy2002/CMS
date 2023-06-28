@@ -53,9 +53,7 @@ if connection.is_connected():
     students_contact VARCHAR(15)  NOT NULL DEFAULT "Not Mentioned",
     whatsapp_no VARCHAR(15)  NOT NULL DEFAULT "Not Mentioned",
     photo   BLOB,
-    year_code VARCHAR(15) NOT NULL
-    FOREIGN KEY (course) REFERENCES courses(course_name),
-    FOREIGN KEY (year_code) REFERENCES batches(year_code)
+    FOREIGN KEY (course) REFERENCES courses(course_name)
     );
     """
     # execute() will execute the query that is given as paramenter
