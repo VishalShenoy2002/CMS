@@ -28,6 +28,9 @@ test_generator=openai.Completion()
 app=Flask(__name__)
 app.config['UPLOAD_FOLDER']=os.path.join(os.getcwd(),"uploads")
 
+if os.path.isdir(app.config['UPLOAD_FOLDER']) == False:
+    os.makedirs(app.config['UPLOAD_FOLDER'])
+
 ALLOWED_EXTENSIONS = {'csv','png',"jpeg","jpg"}
 
 @app.route("/")
@@ -63,11 +66,10 @@ def upload_batch():
         batch.set_end_year()
         batch.create_batch()
 
-        
-        
-
-
         if util_functions.allowed_file(file.filename,ALLOWED_EXTENSIONS) == True:
+            # 
+            if os.path.isdir(os.path.join(app.config['UPLOAD_FOLDER'],"csv")) == False:
+                os.makedirs(os.path.join(app.config['UPLOAD_FOLDER'],"csv"))
             file.save(os.path.join(app.config['UPLOAD_FOLDER'],"csv",secure_filename(file.filename)))
             db_functions.read_and_insert_batch(os.path.join(app.config['UPLOAD_FOLDER'],"csv",secure_filename(file.filename)))
             batch.generate_batch_table()
