@@ -1,0 +1,55 @@
+{% extends "plain_page.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block body %}
+<h1 class="ui centered header">Manage Batch Subjects</h1>
+
+<div class="ui raised very padded medium text  inverted orange container segment">
+
+    <form action="" method="post" enctype="multipart/form-data">
+        <label for="student details" class="ui large header">Enter Details</label><br><br>
+        <div class="grouped fields">
+            <label>Department</label>
+            {% for department in departments %}
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="department" value="{{ department }}">
+                        <label>{{ department }}</label>
+                    </div>
+                </div>
+            {% endfor %}
+          </div><br><br>
+        <div class="ui fluid input">
+            <input type="number" name="start_year" id="start_year" class="ui input" placeholder="Start Year" min="2018" required>
+        </div><br>
+        <div class="ui fluid input">
+            <input type="number" name="end_year" id="end_year" class="ui input" placeholder="End Year" min="2018" required>
+        </div><br>
+
+        <button type="submit" class="ui black centered button">Next</button>
+    </form>
+    <table class="ui celled table">
+        <thead>
+          <tr>
+            <th>Batch ID</th>
+            <th>Course</th>
+            <th>Year Code</th>
+        </tr></thead>
+        <tbody>
+            {% for bid,course,year_code in records%}
+                <tr>
+                    <td data-label="Batch ID">{{ bid.strip().upper() }}</td>
+                    <td data-label="Course">{{ course.strip().upper() }}</td>
+                    <td data-label="Year Code">{{ year_code.strip() }}</td>
+                    <td data-label="Form Link">
+                        <a href="/admin-dashboard/manage-batch-subjects/2/{{ bid }}">
+                            <button class="ui black button">Register</button>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+
+          
+        </tbody>
+      </table>
+</div>
+{% endblock %}
