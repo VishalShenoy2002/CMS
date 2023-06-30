@@ -7,9 +7,17 @@
 
     <form action="" method="post" enctype="multipart/form-data">
         <label for="student details" class="ui large header">Enter Details</label><br><br>
-        <div class="ui fluid input">
-            <input type="text" name="department" id="department" class="ui input" placeholder="Department" required>
-        </div><br>
+        <div class="grouped fields">
+            <label>Department</label>
+            {% for department in departments %}
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="department" value="{{ department }}">
+                        <label>{{ department }}</label>
+                    </div>
+                </div>
+            {% endfor %}
+          </div><br><br>
         <div class="ui fluid input">
             <input type="text" name="batch" id="batch" class="ui input" placeholder="Batch" required>
         </div><br>
