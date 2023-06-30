@@ -46,6 +46,24 @@ class Batch:
     def generate_batch_table(self):
         db_functions.generate_batch_table_view(self.department,self.start_year)
 
+    def exists(self):
+        query=f'SELECT batch_id,course_name,year_code from batches where year_start={self.start_year} and year_end={self.end_year} and course_name="{self.department}";'
+        self._cursor.execute(query)
+
+        records=self._cursor.fetchall()
+        records=records[0]
+        return records != 0
+    
+    def get_record(self):
+        query=f'SELECT batch_id,course_name,year_code from batches where year_start={self.start_year} and year_end={self.end_year} and course_name="{self.department}";'
+        self._cursor.execute(query)
+
+        record=self._cursor.fetchall()
+        return record
+
+         
+        
+
 
 
 
