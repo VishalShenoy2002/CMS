@@ -6,6 +6,7 @@ from werkzeug.utils import secure_filename
 from student import Student
 from faculty import Faculty
 from batch import Batch
+from course import Course
 
 import os
 import csv
@@ -183,18 +184,19 @@ def student_registration():
 @app.route("/student-registration/1",methods=["GET","POST"])
 def student_registration_page_1():
     student=Student()
+    course=Course()
     if request.method == "POST":
         form_data=request.form
+        print(form_data)
         
         student.uucms_no=form_data.get('uucms_no')
         student.batch=int(form_data.get('batch').split("-")[0])
         student.department=form_data.get('department')
-
         if student.exists():
-            return render_template("student_registration_page_1.html",title="Student Registration",records=student.get_record())
+            return render_template("student_registration_page_1.html",title="Student Registration",records=student.get_record(),departments=course.courses_available())
 
     
-    return render_template("student_registration_page_1.html",title="Student Registration",records=student.get_record())
+    return render_template("student_registration_page_1.html",title="Student Registration",records=student.get_record(),departments=course.courses_available())
 
 @app.route("/student-registration/2/<uucms_no>",methods=["GET","POST"])
 def student_registration_page_2(uucms_no):
@@ -202,6 +204,7 @@ def student_registration_page_2(uucms_no):
     student.uucms_no=uucms_no
     record=student.get_full_record()[0]
     fieldnames=["uucms_no","name","course","batch","semester"]
+
     if request.method == "GET":
         record=dict(zip(fieldnames,record))
         print(record)
@@ -220,11 +223,7 @@ def student_registration_page_2(uucms_no):
         
         # Converting the form data into a dictionary because it'll be easier to insert into the csv file
         record=dict(form_data)
-        record["uucms_no"]=uucms_no
-        record["name"]=name
-        record["course"]=course
-        record["batch"]=batch
-        record["semester"]=semester
+        record["uucms_no"],record["name"],record["course"],record["batch"],record["semester"]=uucms_no,name,course,batch,semester
 
 
         if os.path.isdir(os.path.join(app.config['UPLOAD_FOLDER'],"pics","student")) == False:
@@ -319,9 +318,6 @@ def add_subject():
             record=(new_key,subject_name,course_name,subject_type,semester)
             db_functions.insert_subject(record)
 
-        
-        
-        
     return render_template("add_subject.html",title="Add Subject")
 
 @app.route("/admin-dashboard/add-course",methods=["GET","POST"])
@@ -336,9 +332,27 @@ def add_course():
 
     return render_template("add_course.html",title="Add Course")
 
-@app.route("/admin-dashboard/manage-batch-subjects",methods=["GET","POST"])
-def manage_batch_subjects_page():
-    return render_template("manage_batch_subjects.html",title="Manage Batch Subjects")
+@app.route("/admin-dashboard/manage-batch-subjects/1",methods=["GET","POST"])
+def manage_batch_subjects_page_1():
+    course=Course()
+    batch=Batch()
+    if request.method == "POST":
+        batch.department=request.form.get('department')
+        batch.start_year=request.form.get('start_year')
+        batch.end_year=request.form.get('end_year')
+        
+        if batch.exists():
+            return render_template("manage_batch_subjects_page_1.html",title="Manage Batch Subjects",departments=course.courses_available(),records=batch.get_record())
+
+    return render_template("manage_batch_subjects_page_1.html",title="Manage Batch Subjects",departments=course.courses_available())
+    pass
+
+@app.route("/admin-dashboard/manage-batch-subjects/2/<batch_id>",methods=["GET","POST"])
+def manage_batch_subjects_page_2(batch_id):
+    if request.method == "POST":
+        form_data=dict(request.form)
+        print(form_data)
+    return render_template("manage_batch_subjects_page_2.html",title="Manage Batch Subjects")
 
 
 if __name__ == "__main__":
