@@ -1,16 +1,16 @@
 {% extends "plain_page.html" %}
 {% block title %}{{ title }}{% endblock %}
 {% block body %}
-<div class="ui inverted raised very padded medium text container segment">
-    <h1>Login</h1>
+<h1 class="ui centered header">Login</h1>
+<div class="ui inverted raised very padded medium text orange container segment">
     <form action="" method="post" enctype="multipart/form-data">
         <div class="ui fluid input">
-            <input type="text" name="username" id="username" class="ui input" placeholder="Username">
+            <input type="text" name="faculty_id" id="faculty_id" class="ui input" placeholder="Faculty ID" required>
         </div><br>
         <div class="ui fluid input">
-            <input type="password" name="password" id="password" class="ui input" placeholder="Password">
+            <input type="password" name="password" id="password" class="ui input" placeholder="Password" required>
         </div><br>
-        <button type="submit" class="ui violet button">Login</button>
+        <button type="submit" class="ui black button">Login</button>
     </form>
 </div>
 {% endblock %}
