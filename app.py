@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask,Session
 from flask import render_template,redirect,url_for
 from flask import request
 from werkzeug.utils import secure_filename
@@ -12,7 +12,9 @@ import os
 import csv
 import openai
 import hashlib
+import logging
 import json
+import datetime
 import mysql
 
 import util_functions
@@ -28,15 +30,34 @@ test_generator=openai.Completion()
 
 app=Flask(__name__)
 app.config['UPLOAD_FOLDER']=os.path.join(os.getcwd(),"uploads")
+app.secret_key="____"
+
+session=Session()
+# Setting Log Path
+log_path=os.path.join(os.getcwd(),"logs")
+if os.path.isdir(log_path) == False:
+    os.makedirs(log_path)
 
 if os.path.isdir(app.config['UPLOAD_FOLDER']) == False:
     os.makedirs(app.config['UPLOAD_FOLDER'])
 
 ALLOWED_EXTENSIONS = {'csv','png',"jpeg","jpg"}
 
+@app.before_first_request
+def before_first_request():
+    session['logged_in'] = False
+    session['username'] = ""
+
 @app.route("/")
+def cms_page():
+    return render_template("cms_page.html",title="CMS")
+
+@app.route("/home")
 def index():
-    return render_template("index.html",title="Home")
+    if session['logged_in'] == True:
+        return render_template("index.html",title="CMS")
+    else:
+        return redirect("/login")
 
 @app.route("/success")
 def success_page():
@@ -56,7 +77,6 @@ def upload_batch():
         if 'file' not in request.form:
             # print("No File Uploaded")
             pass
-            
 
         file=request.files['file']
         details=file.filename.split('.')[0].split('_')
@@ -147,7 +167,19 @@ def generate_test():
     
 @app.route("/account")
 def account():
-    return render_template("account_page.html",title="Account",details_dict={"Name":"Vishal","Age":20})
+    if session.get("logged_in") == True:
+        faculty=Faculty()
+        faculty.faculty_id=session.get('username')
+        faculty_details=dict(zip(("Faculty ID","Faculty Name","Email","Contact","Department"),faculty.get_faculty_details()))
+        return render_template("account_page.html",title="Account",details_dict=faculty_details)
+    else:
+        return redirect("/login")
+    
+@app.route("/logout")
+def logout():
+    logging.info(f"{session['username']} is logging out")
+    session.clear()
+    return redirect("/")
 
 @app.route("/teachers-dashboard")
 def teachers_dashboard():
@@ -170,17 +202,27 @@ def reports():
 @app.route("/login",methods=["GET","POST"])
 def login_page():
     if request.method == "POST":
-        username=request.form.get("username")
+        username=request.form.get("faculty_id")
         password=request.form.get("password")
+
         password=hashlib.sha256(password.encode()).hexdigest()
+
         if db_functions.check_cred(username,password) == True:
-            return redirect("/")
+            logging.info(f"Login Successful - {username}")
+            session['logged_in'] = True
+            session['username'] = username
+            return redirect("/home")
+        else:
+            session['logged_in'] = False
+            logging.info("Login Failed")
         print(f"Username: {username} Password: {password}")
+        print(session['logged_in'])
     return render_template("login_page.html",title="Login")
 
 @app.route("/student-registration",methods=["GET","POST"])
 def student_registration():
     return render_template("student_registration_info_page.html",title="Student Registration")
+
 @app.route("/student-registration/1",methods=["GET","POST"])
 def student_registration_page_1():
     student=Student()
@@ -356,5 +398,7 @@ def manage_batch_subjects_page_2(batch_id):
 
 
 if __name__ == "__main__":
-    # print(url_for('static'))
+    timestamp=datetime.date.today().strftime("%Y-%m-%d")
+    filename=os.path.join(log_path,f"log_{timestamp}.log")
+    logging.basicConfig(filename=filename,level=logging.DEBUG)
     app.run(host=data['http']['host'],debug=True)
