@@ -24,6 +24,8 @@ db_name=input("DB Name: ")
 db_user=input("DB User: ")
 db_pass=getpass.getpass("DB Password: ")
 print("\n\n")
+print("Application Secret Key")
+secret_key=input("Key: ")
 
 table.add_column("Keys",justify="left")
 table.add_column("Values",justify="left")
@@ -39,6 +41,10 @@ table.add_row("DB Password",db_pass)
 table.add_section()
 table.add_row("HTTP Configuration","",style="bold")
 table.add_row("HTTP Host",http_host)
+table.add_section()
+table.add_row("App Configuration","",style="bold")
+table.add_row("Secret Key",secret_key)
+
 
 console.print(table)
 data={"db":{"user":db_user,"password":db_pass,"host":db_host,"database":db_name},"http":{"host": http_host},"tokens":{"openai":open_ai_token}}
