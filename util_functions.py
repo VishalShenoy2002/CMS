@@ -23,7 +23,7 @@ def insert_into_uploaded_files(data:tuple) -> str:
 
 # check_cred_query() is a function that is used to generate a query to check the credentials
 def check_cred_query(username) -> str:
-    query=f'SELECT password from faculty WHERE username="{username}"'
+    query=f'SELECT password from faculty WHERE faculty_id ="{username}"'
     return query
 
 def insert_basic_student_details(data:tuple):
