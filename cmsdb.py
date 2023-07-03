@@ -67,8 +67,8 @@ if connection.is_connected():
     email        VARCHAR(100) NOT NULL,
     contact      VARCHAR(15)  NOT NULL,
     department   VARCHAR(5) NOT NULL,
+    designation VARCHAR(50) NOT NULL DEFAULT "Professor",
     current_status VARCHAR(10) NOT NULL DEFAULT "Working",
-    post         VARCHAR(50) NOT NULL DEFAULT "HOD",
     password     VARCHAR(64)  NOT NULL DEFAULT "4bddb0a3e00962416386fea5bca2cfd9759c9ba2ead9deeb65c1727277987698",
     photo        BLOB   
 
