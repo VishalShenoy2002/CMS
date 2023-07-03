@@ -47,6 +47,7 @@ ALLOWED_EXTENSIONS = {'csv','png',"jpeg","jpg"}
 def before_first_request():
     session['logged_in'] = False
     session['username'] = ""
+    session['role'] = ""
 
 @app.route("/")
 def cms_page():
@@ -55,7 +56,7 @@ def cms_page():
 @app.route("/home")
 def index():
     if session['logged_in'] == True:
-        return render_template("index.html",title="CMS")
+        return render_template("index.html",title="CMS",role=session["role"])
     else:
         return redirect("/login")
 
@@ -69,7 +70,7 @@ def fail_page():
 # Admission Page Routes
 @app.route("/admission")
 def admission():
-    return render_template("admission.html",title="Admission")
+    return render_template("admission.html",title="Admission",role=session['role'])
 
 @app.route("/admission/upload-batch",methods=["GET","POST"])
 def upload_batch():
@@ -94,46 +95,46 @@ def upload_batch():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'],"csv",secure_filename(file.filename)))
             db_functions.read_and_insert_batch(os.path.join(app.config['UPLOAD_FOLDER'],"csv",secure_filename(file.filename)))
             batch.generate_batch_table()
-            return render_template("upload_batch.html",title="Upload Batch", filename=file.filename,message={"text":"File Saved Successfully","message_type":"success"})
+            return render_template("upload_batch.html",title="Upload Batch", filename=file.filename,message={"text":"File Saved Successfully","message_type":"success"},role=session['role'])
 
         elif util_functions.allowed_file(file.filename,ALLOWED_EXTENSIONS) == False:
-            return render_template("upload_batch.html",title="Upload Batch", filename=file.filename,message={"text":"File Not Saved ","message_type":"error"})
+            return render_template("upload_batch.html",title="Upload Batch", filename=file.filename,message={"text":"File Not Saved ","message_type":"error"},role=session['role'])
         
         else:
-            return render_template("upload_batch.html",title="Upload Batch", filename=file.filename,message={"text":"No File Selcleted","message_type":"success"})
+            return render_template("upload_batch.html",title="Upload Batch", filename=file.filename,message={"text":"No File Selcleted","message_type":"success"},role=session['role'])
     
 
-    return render_template("upload_batch.html",title="Upload Batch",message={"text":"","message_type":""})
+    return render_template("upload_batch.html",title="Upload Batch",message={"text":"","message_type":""},role=session['role'])
 
 @app.route("/admission/edit-batch")
 def edit_batch():
-    return render_template("edit_batch.html",title="Edit Batch")
+    return render_template("edit_batch.html",title="Edit Batch",role=session['role'])
 
 @app.route("/admission/delete-batch")
 def delete_batch():
-    return render_template("delete_batch.html",title="Delete Batch")
+    return render_template("delete_batch.html",title="Delete Batch",role=session['role'])
 
 @app.route("/search")
 def search_batch():
-    return render_template("search.html",title="Search")
+    return render_template("search.html",title="Search",role=session['role'])
 
 @app.route("/edit-batch/add-student")
 def add_student():
-    return render_template("add_student.html",title="Edit Batch | Add Student")
+    return render_template("add_student.html",title="Edit Batch | Add Student",role=session['role'])
 
 @app.route("/edit-batch/remove-student")
 def remove_student():
-    return render_template("remove_student.html",title="Edit Batch | Remove Student")
+    return render_template("remove_student.html",title="Edit Batch | Remove Student",role=session['role'])
 
 @app.route("/edit-batch/edit-student")
 def edit_student():
-    return render_template("edit_student.html",title="Edit Batch | Edit Student")
+    return render_template("edit_student.html",title="Edit Batch | Edit Student",role=session['role'])
 
 
 # Internal Assesment Page Routes
 @app.route("/internal-assesment")
 def internal_assesment():
-    return render_template("internal_assesment.html",title="Internal Assesment")
+    return render_template("internal_assesment.html",title="Internal Assesment",role=session['role'])
 
 @app.route("/internal-assesment/upload-marks")
 def upload_marks():
@@ -149,7 +150,7 @@ def upload_marks():
         else:
             return "File Not Saved (expected CSV)"
     
-    return render_template("upload_marks.html",title="Internal Assesment | Upload Marks")
+    return render_template("upload_marks.html",title="Internal Assesment | Upload Marks",role=session["role"])
 
 @app.route("/internal-assesment/generate-test",methods=["GET","POST"])
 def generate_test():
@@ -162,16 +163,16 @@ def generate_test():
         response=response['choices'][0]['text'].strip()
         question=[tuple(question.split("-")) for question in response.split("\n")]
         
-        return render_template("generate_test.html",title="Internal Assesment | Generate Test",questions=question)
-    return render_template("generate_test.html",title="Internal Assesment | Generate Test")
+        return render_template("generate_test.html",title="Internal Assesment | Generate Test",questions=question,role=session['role'])
+    return render_template("generate_test.html",title="Internal Assesment | Generate Test",role=session['role'])
     
 @app.route("/account")
 def account():
     if session.get("logged_in") == True:
         faculty=Faculty()
         faculty.faculty_id=session.get('username')
-        faculty_details=dict(zip(("Faculty ID","Faculty Name","Email","Contact","Department"),faculty.get_faculty_details()))
-        return render_template("account_page.html",title="Account",details_dict=faculty_details)
+        faculty_details=dict(zip(("Faculty ID","Faculty Name","Email","Contact","Department","Designation"),faculty.get_faculty_details()))
+        return render_template("account_page.html",title="Account",details_dict=faculty_details,role=session['role'])
     else:
         return redirect("/login")
     
@@ -183,34 +184,37 @@ def logout():
 
 @app.route("/teachers-dashboard")
 def teachers_dashboard():
-    return render_template("teachers_dashboard.html",title="Teacher's Dashboard",timetable={1:"SE",2:"DAA",3:"GE"},topics={"27-09-2023":"Stack DS, Queue DS","26-09-2023":"Linked List DS"},date="28-09-2023")
+    return render_template("teachers_dashboard.html",title="Teacher's Dashboard",timetable={1:"SE",2:"DAA",3:"GE"},topics={"27-09-2023":"Stack DS, Queue DS","26-09-2023":"Linked List DS"},date="28-09-2023",role=session['role'])
 
 @app.route("/admin-dashboard/subject-allotment",methods=["GET","POST"])
 def subject_allotment():
     if request.method == "POST":
         print(request.form)
-    return render_template("subject_allotment_page.html",title="Subject Allotment",user_type='hod',semesters=[1,2,3,4,5,6,7,8])
+    return render_template("subject_allotment_page.html",title="Subject Allotment",user_type='hod',semesters=[1,2,3,4,5,6,7,8],role=session['role'])
 
 @app.route("/attendance",methods=["GET","POST"])
 def attendance():
-    return render_template("attendance_page.html",title="Attendance")
+    return render_template("attendance_page.html",title="Attendance",role=session['role'])
 
 @app.route("/reports")
 def reports():
-    return render_template("reports.html",title="Reports")
+    return render_template("reports.html",title="Reports",role=session['role'])
 
 @app.route("/login",methods=["GET","POST"])
 def login_page():
     if request.method == "POST":
+        faculty=Faculty()
         username=request.form.get("faculty_id")
         password=request.form.get("password")
 
+        faculty.faculty_id=username
         password=hashlib.sha256(password.encode()).hexdigest()
 
         if db_functions.check_cred(username,password) == True:
             logging.info(f"Login Successful - {username}")
             session['logged_in'] = True
             session['username'] = username
+            session['role'] = faculty.fetch_designation()
             return redirect("/home")
         else:
             session['logged_in'] = False
@@ -307,13 +311,16 @@ def student_registration_page_2(uucms_no):
 
 @app.route("/faculty-registration",methods=["GET","POST"])
 def faculty_registation():
+    course=Course()
     if request.method == "POST":
         faculty=Faculty()
+
         faculty.faculty_id=request.form.get('faculty_id')
         faculty.name=request.form.get('faculty_name')
         faculty.faculty_email=request.form.get('faculty_email')
         faculty.faculty_contact=request.form.get('faculty_contact')
         faculty.department=request.form.get('department')
+        faculty.designation=request.form.get('designation')
         photo=request.files['photo']
 
         if os.path.isdir(os.path.join(app.config['UPLOAD_FOLDER'],"pics","faculty")) == False:
@@ -330,13 +337,13 @@ def faculty_registation():
             return redirect("/success")
         else:
             return redirect("/failed")
-
-    return render_template("faculty_registration.html",title="Faculty Registration")
+        
+    return render_template("faculty_registration.html",title="Faculty Registration",departments=course.courses_available())
 
 
 @app.route("/admin-dashboard")
 def admin_dashboard():
-    return render_template("admin_dashboard.html",title="Admin Dashboard")
+    return render_template("admin_dashboard.html",title="Admin Dashboard",role=session["role"])
 
 @app.route("/admin-dashboard/add-subject",methods=["GET","POST"])
 def add_subject():
