@@ -12,6 +12,7 @@ class Faculty:
         self.faculty_email:str=None
         self.faculty_contact:str=None
         self.department=None
+        self.designation=None
 
         with open("config.json","r") as f:
             data=json.load(f)
@@ -26,16 +27,27 @@ class Faculty:
         self._cursor.execute(query)
         self.records=self._cursor.fetchall()
         print(int(self.records[0][0]))
+        del query
         return int(self.records[0][0]) != 0
     
     def add_faculty(self,data:tuple):
-        query=f'INSERT INTO faculty(faculty_id,faculty_name,email,contact,department)VALUES("{self.faculty_id}","{self.name}","{self.faculty_email}","{self.faculty_contact}","{self.department}");'
+        query=f'INSERT INTO faculty(faculty_id,faculty_name,email,contact,department,designation)VALUES("{self.faculty_id}","{self.name}","{self.faculty_email}","{self.faculty_contact}","{self.department}","{self.designation}");'
         self._cursor.execute(query)
+        del query
         self._connection.commit()
 
     def get_faculty_details(self):
         query=f'SELECT * FROM faculty WHERE faculty_id="{self.faculty_id}";'
         self._cursor.execute(query)
         self.records=self._cursor.fetchone()
+        del query
         return self.records
+    
+    def fetch_designation(self):
+        query=f'SELECT designation FROM faculty WHERE faculty_id="{self.faculty_id}";'
+        self._cursor.execute(query)
+        self.records=self._cursor.fetchone()[0]
+        del query
+        return self.records
+
 
