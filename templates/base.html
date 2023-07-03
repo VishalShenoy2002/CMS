@@ -19,7 +19,9 @@
                 <a href="/internal-assesment" class="item">Internal Assesment</a>
                 <a href="/reports" class="item">Reports</a>
                 <a href="/teachers-dashboard" class="item">Teacher's Dashboard</a>
-                <a href="/admin-dashboard" class="item">Admin's Dashboard</a>
+                {% if role.upper() == "HOD" %}
+                    <a href="/admin-dashboard" class="item">Admin's Dashboard</a>
+                {% endif %}
                 <a href="/attendance" class="item">Attendance</a>
                 <a href="/account" class="item">Account</a>
 
