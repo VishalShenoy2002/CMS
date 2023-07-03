@@ -15,9 +15,39 @@
             <input type="text" name="faculty_name" id="faculty_name" class="ui input" placeholder="Faculty Name">
         </div><br>
 
-        <div class="ui fluid input">
-            <input type="text" name="department" id="department" class="ui input" placeholder="Department">
-        </div><br>
+        <div class="grouped fields">
+            <label>Department</label>
+            {% for department in departments %}
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="department" value="{{ department }}">
+                        <label>{{ department }}</label>
+                    </div>
+                </div>
+            {% endfor %}
+          </div><br><br>
+
+        <div class="grouped fields">
+            <label>Designation</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="designation" value="Professor">
+                        <label>Professor</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="designation" value="Asst. Professor">
+                        <label>Asst. Professor</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="designation" value="HOD">
+                        <label>HOD</label>
+                    </div>
+                </div>
+          </div><br><br>
         
         <label for="faculty contact" class="ui large header">Contact Details</label><br><br>
 
