@@ -3,31 +3,31 @@
 {% block body %}
 <h1 class="ui centered header">Subject Allotment</h1>
 <div class="ui raised very padded medium text inverted orange container segment">
-    <form action="" method="post" enctype="multipart/form-data">
-        <div class="ui fluid input">
-            <input type="text" name="dept" id="dept" class="ui input" placeholder="Department">
+    <form action="" method="post">
+        <div class="inline fields">
+                <label>Select Subject</label>
+                {% for subject in subjects %}
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="subject" value="{{ subject }}">
+                        <label>{{ subject }}</label>
+                    </div>
+                </div>
+                {% endfor %}
         </div><br>
-        <div class="ui fluid input">
-            <input type="text" name="semester" id="semester" class="ui input" placeholder="Semester">
+        <div class="inline fields">
+                <label>Select Batch</label>
+                {% for batch in batches %}
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="batch" value="{{ batch }}">
+                        <label>{{ batch }}</label>
+                    </div>
+                </div>
+                {% endfor %}
         </div><br>
-        <div class="ui fluid input">
-            <input type="text" name="subject" id="subject" class="ui input" placeholder="Subject">
-        </div><br><br>
-        <button type="submit" class="ui violet button">Alloted To Teacher</button>
-    </form><br><br>
-    {% if user_type == 'admin' or user_type == 'hod' %}
-        <a href="/teachers-dashboard/subject-allotment/allot">
-        <button class="ui violet button">Allot Subject</button>
-        </a>
-    {% endif %}
-    <div class="ui form">
-        {% for semester in semesters %}
-            <div class="ui radio checkbox">
-                <input type="radio" name="semester">
-                <label>{{ semester }}</label>
-            </div>
 
-        {% endfor %}
-    </div>
+    </form>
 </div>
+
 {% endblock %}
