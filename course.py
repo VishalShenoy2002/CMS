@@ -36,4 +36,4 @@ class Course:
         
 
 
-Course().courses_available()
+
