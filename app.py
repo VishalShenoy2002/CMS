@@ -7,6 +7,7 @@ from student import Student
 from faculty import Faculty
 from batch import Batch
 from course import Course
+from subject import Subject
 
 import os
 import csv
@@ -190,7 +191,7 @@ def teachers_dashboard():
 def subject_allotment():
     if request.method == "POST":
         print(request.form)
-    return render_template("subject_allotment_page.html",title="Subject Allotment",user_type='hod',semesters=[1,2,3,4,5,6,7,8],role=session['role'])
+    return render_template("subject_allotment_page.html",title="Subject Allotment",role=session['role'],subjects=['a','b','c'],batches=[1,2,4])
 
 @app.route("/attendance",methods=["GET","POST"])
 def attendance():
@@ -394,15 +395,24 @@ def manage_batch_subjects_page_1():
             return render_template("manage_batch_subjects_page_1.html",title="Manage Batch Subjects",departments=course.courses_available(),records=batch.get_record())
 
     return render_template("manage_batch_subjects_page_1.html",title="Manage Batch Subjects",departments=course.courses_available())
-    pass
+
 
 @app.route("/admin-dashboard/manage-batch-subjects/2/<batch_id>",methods=["GET","POST"])
 def manage_batch_subjects_page_2(batch_id):
+    subject=Subject()
     if request.method == "POST":
         form_data=dict(request.form)
-        print(form_data)
-    return render_template("manage_batch_subjects_page_2.html",title="Manage Batch Subjects")
+        subject_codes=[subject.get_subject_code_from_name(name,4) for name in form_data.values() if name != '']
+        subject_dict=dict(zip(list(form_data.keys()),subject_codes))
+        del form_data,subject_codes
+        print(subject_dict)
 
+
+        subject.course_name=batch_id.split('-')[1]
+        subject.subject_type="core"
+        subject.allot_subjects_for_batch(batch_id,subject_dict)
+        
+    return render_template("manage_batch_subjects_page_2.html",title="Manage Batch Subjects",batch_id=batch_id.upper())
 
 if __name__ == "__main__":
     timestamp=datetime.date.today().strftime("%Y-%m-%d")
