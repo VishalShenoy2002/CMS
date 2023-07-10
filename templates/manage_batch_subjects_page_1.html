@@ -33,6 +33,7 @@
             <th>Batch ID</th>
             <th>Course</th>
             <th>Year Code</th>
+            <th>Manage</th>
         </tr></thead>
         <tbody>
             {% for bid,course,year_code in records%}
@@ -40,9 +41,9 @@
                     <td data-label="Batch ID">{{ bid.strip().upper() }}</td>
                     <td data-label="Course">{{ course.strip().upper() }}</td>
                     <td data-label="Year Code">{{ year_code.strip() }}</td>
-                    <td data-label="Form Link">
+                    <td data-label="Manage">
                         <a href="/admin-dashboard/manage-batch-subjects/2/{{ bid }}">
-                            <button class="ui black button">Register</button>
+                            <button class="ui black button">Manage</button>
                         </a>
                     </td>
                 </tr>
