@@ -49,6 +49,7 @@ def before_first_request():
     session['logged_in'] = False
     session['username'] = ""
     session['role'] = ""
+    session['department'] = ""
 
 @app.route("/")
 def cms_page():
@@ -67,7 +68,7 @@ def success_page():
 
 @app.route("/failed")
 def fail_page():
-    return render_template("failed.html")
+    return render_template("failed.html",title="Task Failed")
 # Admission Page Routes
 @app.route("/admission")
 def admission():
@@ -176,6 +177,10 @@ def account():
         return render_template("account_page.html",title="Account",details_dict=faculty_details,role=session['role'])
     else:
         return redirect("/login")
+
+@app.route("/change-password")
+def change_password_page():
+    return render_template("change_password_page.html",role=session['role'])
     
 @app.route("/logout")
 def logout():
@@ -187,11 +192,24 @@ def logout():
 def teachers_dashboard():
     return render_template("teachers_dashboard.html",title="Teacher's Dashboard",timetable={1:"SE",2:"DAA",3:"GE"},topics={"27-09-2023":"Stack DS, Queue DS","26-09-2023":"Linked List DS"},date="28-09-2023",role=session['role'])
 
-@app.route("/admin-dashboard/subject-allotment",methods=["GET","POST"])
-def subject_allotment():
+@app.route("/admin-dashboard/subject-allotment/1",methods=["GET","POST"])
+def subject_allotment_page_1():
+    if session.get("role") == "HOD" and session.get('logged_in') == True:
+        if request.method == "POST":
+            return render_template("subject_allotment_page_2.html",title="Subject Allotment",role=session['role'],subjects=['a','b','c'],batches=[1,2,4],batch_id="nep-bca-2124")
+        return render_template("subject_allotment_page_1.html",title="Subject Allotment",role=session['role'],subjects=['a','b','c'],batches=[1,2,4])
+    else:
+        return redirect("/login")
+@app.route("/admin-dashboard/subject-allotment/2/<batch_id><semester>",methods=["GET","POST"])
+def subject_allotment_page_2(batch_id,semester):
+    if request.method == "GET":
+        subject=Subject()
+        subject_list=subject.get_subject_list(semester)
+        return render_template("subject_allotment_page_2.html",title="Subject Allotment",role=session['role'],subjects=subject_list,batches=[1,2,4],)
     if request.method == "POST":
-        print(request.form)
-    return render_template("subject_allotment_page.html",title="Subject Allotment",role=session['role'],subjects=['a','b','c'],batches=[1,2,4])
+        # return render_template("")
+        pass
+    return render_template("subject_allotment_page_2.html",title="Subject Allotment",role=session['role'],subjects=['a','b','c'],batches=[1,2,4])
 
 @app.route("/attendance",methods=["GET","POST"])
 def attendance():
