@@ -2,63 +2,54 @@
 {% block title %}{{ title }}{% endblock %}
 {% block body %}
 
-<h1 class="ui centered header">Admission</h1>
-<div class="ui raised very padded medium text inverted orange container segment">
-    <div class="ui link cards">
-        <div class="card">
-            <div class="image">
-                <img src="../static/imgs/upload_batch.jpg">
+<div class="container">
+
+    <h1 class="heading">Admission</h1>
+    <br><br>
+    <div class="four-column-card-container">
+        <div class="yellow-background card">
+            <div class="card-title">
+                <h1 class="heading">Upload Batch</h1>
             </div>
-            <div class="content">
-                <div class=" header"><a href="/admission/upload-batch">Upload Batch</a></div>
-
-                <div class="description">
-                    Add a new Batch to the Student Management System
-
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="image">
-                <img src="../static/imgs/edit_batch.jpg">
-            </div>
-            <div class="content">
-                <div class="header"><a href="/admission/edit-batch">Edit Batch</a></div>
-
-                <div class="description">
-                    Edit an existing Batch in the Student Management System
-
-                </div>
+            <div class="plain card-content">
+                Add a new batch of Students to the Student Management System
+                <br><br>
+                <button class="button"><a href="/admission/upload-batch">Go To Page</a></button>
             </div>
         </div>
-        <div class="card">
-            <div class="image">
-                <img src="../static/imgs/delete_batch.jpg">
+        <div class="yellow-background card">
+            <div class="card-title">
+                <h1 class="heading">Edit Batch</h1>
             </div>
-            <div class="content">
-                <div class="header"><a href="/admission/delete-batch">Delete Batch</a></div>
+            <div class="plain card-content">
+                Edit an existing Batch in the Student Management System
+                <br><br>
+                <button class="button"><a href="/admission/edit-batch">Go To Page</a></button>
+            </div>
 
-                <div class="description">
-                    Discard an existing Batch in the Student Management System
-
-                </div>
+        </div>
+        <div class="yellow-background card">
+            <div class="card-title">
+                <h1 class="heading">Delete Batch</h1>
+            </div>
+            <div class="plain card-content">
+                Discard an existing Batch in the Student Management System
+                <br><br>
+                <button class="button"><a href="/admission/edit-batch">Go To Page</a></button>
             </div>
         </div>
-        <div class="card">
-            <div class="image">
-                <img src="../static/imgs/search_batch.jpg">
+        <div class="yellow-background card">
+            <div class="card-title">
+                <h1 class="heading">Search</h1>
             </div>
-            <div class="content">
-                <div class="header"><a href="/search">Search</a></div>
-
-                <div class="description">
-                    Search for a Student or a Batch in the Student Management System
-
-                </div>
+            <div class="plain card-content">
+                Search for a Student or a Batch in the Student Management System
+                <br><br>
+                <button class="button"><a href="/search">Go To Page</a></button>
             </div>
         </div>
-
     </div>
 </div>
+
 
 {% endblock %}
